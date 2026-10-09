@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171a25">
+<meta name="description" content="NekoQuest: planner de tarefas em pixel art com gatinhos, missões, Pomodoro e recompensas personalizadas.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="cat-192.png">
+<link rel="apple-touch-icon" href="cat-192.png">
+<title>NEKOQUEST — Pixel Planner</title>
+<style>
+:root{--bg:#171a25;--panel:#202536;--panel2:#272e42;--line:#3b4560;--text:#f4f1e8;--muted:#b0b8cb;--accent:#b8f36b;--accentText:#182018;--danger:#ff8b9b;--shadow:4px 4px 0 #0d0f17;--pixel:4px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Courier New",monospace;font-size:14px;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px dashed var(--accent);outline-offset:3px}button:disabled{opacity:.45;cursor:not-allowed}
+.app{max-width:1120px;margin:auto;min-height:100vh;padding:18px 18px 100px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 18px;border-bottom:2px solid var(--line);margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.pixel-cat{width:38px;height:34px;background:var(--accent);color:var(--accentText);display:grid;place-items:center;font-weight:900;clip-path:polygon(0 0,28% 0,28% 20%,72% 20%,72% 0,100% 0,100% 100%,0 100%)}.pixel-cat-img{width:38px;height:38px;image-rendering:pixelated;object-fit:contain;flex:0 0 auto}.brand h1{font-size:19px;letter-spacing:1px;margin:0}.brand h1 span{color:var(--accent)}.top-actions{display:flex;gap:8px}.pixel-btn,.icon-btn,.nav-btn,.tab-btn{border:2px solid var(--line);background:var(--panel);padding:10px 12px;font-weight:bold;box-shadow:2px 2px 0 #0d0f17;transition:transform .08s,box-shadow .08s}.pixel-btn:hover,.icon-btn:hover,.nav-btn:hover,.tab-btn:hover{border-color:var(--accent)}.pixel-btn:active,.icon-btn:active,.nav-btn:active,.tab-btn:active{transform:translate(2px,2px);box-shadow:none}.primary{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.icon-btn{width:42px;height:42px;padding:0;font-size:17px}.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:22px}.sidebar{align-self:start;position:sticky;top:16px}.profile-mini,.panel,.stat,.task,.calendar-day,.reward,.timer-card{background:var(--panel);border:2px solid var(--line);box-shadow:var(--shadow)}.profile-mini{padding:16px;margin-bottom:16px}.avatar{width:58px;height:58px;background:var(--panel2);border:2px solid var(--accent);display:grid;place-items:center;font-size:28px;margin-bottom:10px;image-rendering:pixelated}.profile-mini h2{font-size:15px;margin:0 0 2px;overflow-wrap:anywhere}.muted{color:var(--muted)}.tiny{font-size:11px}.xp-track{height:12px;background:var(--bg);border:2px solid var(--line);margin:10px 0}.xp-fill{height:100%;width:0;background:var(--accent);transition:width .2s}.nav{display:grid;gap:8px}.nav-btn{text-align:left;box-shadow:none;display:flex;align-items:center;gap:10px}.nav-btn.active{background:var(--accent);border-color:var(--accent);color:var(--accentText)}.main{min-width:0}.page{display:none}.page.active{display:block}.page-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px}.page-heading h2{font-size:23px;margin:0 0 4px;line-height:1.2}.eyebrow{color:var(--accent);font-weight:bold;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}.stat{padding:13px;min-width:0}.stat-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}.stat-value{font-size:24px;font-weight:bold;color:var(--accent);overflow-wrap:anywhere}.panel{padding:17px;margin-bottom:18px}.panel h3{font-size:15px;margin:0 0 12px}.row{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.task-list{display:grid;gap:10px}.task{box-shadow:none;padding:13px;display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:12px;align-items:start}.task.done{opacity:.68}.check{width:22px;height:22px;border:2px solid var(--muted);background:transparent;padding:0;display:grid;place-items:center;color:var(--accentText)}.task.done .check{background:var(--accent);border-color:var(--accent)}.task-title{font-weight:bold;overflow-wrap:anywhere}.task.done .task-title{text-decoration:line-through}.task-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px;color:var(--muted);font-size:11px}.tag{border:1px solid var(--line);padding:2px 6px}.task-actions{display:flex;gap:5px}.mini-btn{background:transparent;border:1px solid var(--line);padding:5px 7px}.mini-btn:hover{border-color:var(--accent)}.empty{border:2px dashed var(--line);padding:28px 16px;text-align:center;color:var(--muted)}.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px}.tab-btn{box-shadow:none;padding:7px 10px;font-size:12px}.tab-btn.active{background:var(--accent);border-color:var(--accent);color:var(--accentText)}.field{display:grid;gap:5px;margin-bottom:13px}.field label{font-size:11px;color:var(--muted);font-weight:bold;text-transform:uppercase;letter-spacing:.5px}.field input,.field select,.field textarea,input,select{width:100%;min-width:0;background:var(--bg);color:var(--text);border:2px solid var(--line);padding:10px;border-radius:0}.field textarea{min-height:80px;resize:vertical}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.form-actions{display:flex;gap:8px;flex-wrap:wrap}.calendar-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.weekday{text-align:center;color:var(--muted);font-size:10px;padding:5px 0}.calendar-day{box-shadow:none;min-height:70px;padding:7px 4px;text-align:left;background:var(--bg);border-color:var(--line);position:relative}.calendar-day.muted-day{opacity:.35}.calendar-day.today{border-color:var(--accent)}.calendar-day.selected{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.calendar-day .dot{display:block;width:6px;height:6px;background:var(--accent);margin-top:6px}.calendar-day.selected .dot{background:var(--accentText)}.timer-card{text-align:center;padding:25px 18px}.timer-mode{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-bottom:22px}.timer-display{font-size:clamp(48px,10vw,76px);font-weight:bold;letter-spacing:2px;line-height:1.2;margin:8px 0 14px;font-variant-numeric:tabular-nums}.timer-ring{width:min(280px,75vw);aspect-ratio:1;border:8px solid var(--line);outline:4px solid var(--panel2);margin:0 auto 20px;display:flex;flex-direction:column;justify-content:center;align-items:center;box-shadow:inset 0 0 0 5px var(--panel);background:var(--bg)}.timer-ring.running{border-color:var(--accent)}.timer-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.reward-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.reward{padding:15px;box-shadow:none}.reward.locked{opacity:.55}.reward-icon{font-size:25px;margin-bottom:7px}.reward h3{font-size:14px;margin:0 0 5px}.reward p{font-size:12px;color:var(--muted);margin:0 0 10px}.reward-status{font-size:11px;color:var(--accent);font-weight:bold}.history-list{display:grid;gap:8px}.history-item{border-left:4px solid var(--accent);padding:10px 12px;background:var(--panel)}.history-item strong{display:block;overflow-wrap:anywhere}.history-item small{color:var(--muted)}.profile-edit{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;align-items:start}.avatar-big{width:100px;height:100px;font-size:44px}.swatches{display:flex;gap:8px;flex-wrap:wrap}.swatch{width:32px;height:32px;border:2px solid var(--line);padding:0}.swatch.active{outline:2px dashed var(--text);outline-offset:2px}.notice{border-left:4px solid var(--accent);padding:10px 12px;background:var(--panel2);color:var(--muted);font-size:12px;margin-bottom:14px}.bottom-nav{display:none}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--accentText);border:2px solid var(--text);padding:10px 15px;font-weight:bold;z-index:20;box-shadow:var(--shadow);max-width:90vw;text-align:center}.hidden{display:none!important}
+body.light{--bg:#f4f1e8;--panel:#fffdf5;--panel2:#ebe7d9;--line:#c4beac;--text:#272a32;--muted:#656b78;--shadow:4px 4px 0 #d1ccbd}
+@media(max-width:760px){.app{padding:12px 12px 94px}.layout{display:block}.sidebar{display:none}.topbar{margin-bottom:16px}.brand h1{font-size:16px}.page-heading h2{font-size:20px}.bottom-nav{position:fixed;z-index:10;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;padding:7px max(7px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left));background:var(--bg);border-top:2px solid var(--line)}.bottom-nav .nav-btn{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:3px;padding:7px 2px;font-size:10px;min-width:0;overflow:hidden}.bottom-nav .nav-btn .nav-icon{font-size:16px}.bottom-nav .nav-btn .nav-text{font-size:9px;overflow-wrap:anywhere}.stats{gap:7px}.stat{padding:10px}.stat-value{font-size:21px}.panel{padding:13px}.task{grid-template-columns:23px minmax(0,1fr);gap:9px}.task-actions{grid-column:2;justify-content:flex-end}.calendar-day{min-height:52px;font-size:11px;padding:5px 3px}.weekday{font-size:9px}.reward-grid{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}.profile-edit{grid-template-columns:1fr}.avatar-big{margin:auto}.page-heading{align-items:center}.page-heading .pixel-btn{padding:8px;font-size:12px}}
+@media(max-width:380px){.app{padding-left:9px;padding-right:9px}.brand{gap:7px}.pixel-cat{width:30px;height:29px}.pixel-cat-img{width:30px;height:30px}.brand h1{font-size:14px}.top-actions{gap:5px}.icon-btn{width:36px;height:36px}.stat-label{font-size:9px}.stat-value{font-size:18px}.bottom-nav .nav-btn .nav-text{font-size:8px}.calendar-grid{gap:3px}.calendar-day{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* MOBILE-FIRST PATCH: prioridade para smartphones */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+button, input, select, textarea { font: inherit; }
+button, .pixel-btn, .icon-btn, .nav-btn, .tab-btn, .mini-btn { touch-action: manipulation; }
+button { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px dashed var(--accent); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  html { scroll-padding-bottom: 124px; }
+  .app {
+    width: 100%;
+    max-width: 100%;
+    padding: max(10px, env(safe-area-inset-top)) 12px 132px;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    margin: 0 -12px 16px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-bottom: 2px solid var(--line);
+  }
+  .brand { min-width: 0; gap: 8px; }
+  .brand h1 { font-size: 15px; line-height: 1.2; }
+  .pixel-cat { flex: 0 0 32px; width: 32px; height: 30px; }
+  .top-actions { flex: 0 0 auto; }
+  .icon-btn { width: 42px; height: 42px; }
+  .layout { display: block; width: 100%; }
+  .main { min-width: 0; width: 100%; }
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .page-heading > .pixel-btn { min-height: 44px; }
+  .page-heading h2 { font-size: 21px; }
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+  .stat { padding: 10px 8px; }
+  .stat-label { font-size: 9px; line-height: 1.3; letter-spacing: .4px; }
+  .stat-value { font-size: clamp(17px, 5.5vw, 22px); line-height: 1.2; }
+  .panel { padding: 12px; margin-bottom: 14px; }
+  .task-list { gap: 9px; }
+  .task {
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 9px;
+    padding: 12px 10px;
+  }
+  .check { width: 26px; height: 26px; }
+  .task-title { font-size: 14px; line-height: 1.4; }
+  .task-meta { font-size: 11px; gap: 5px; }
+  .task-actions {
+    grid-column: 2;
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .mini-btn { min-height: 38px; min-width: 42px; padding: 7px 10px; }
+  .pixel-btn, .tab-btn { min-height: 42px; }
+  .filters { gap: 7px; }
+  .tab-btn { padding: 8px 11px; }
+  .field-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .field { margin-bottom: 14px; }
+  .field input, .field select, .field textarea, input, select {
+    min-height: 44px;
+    font-size: 16px; /* evita zoom automático no iOS */
+    border-radius: 0;
+  }
+  .field textarea { min-height: 92px; }
+  .form-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form-actions > * { min-width: 0; }
+  .calendar-controls { flex-wrap: wrap; }
+  .calendar-grid { gap: 3px; }
+  .weekday { font-size: 10px; }
+  .calendar-day {
+    min-width: 0;
+    min-height: 49px;
+    padding: 6px 2px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .calendar-day .dot { margin-top: 4px; }
+  .timer-card { padding: 18px 12px; }
+  .timer-mode { gap: 6px; margin-bottom: 18px; }
+  .timer-mode .tab-btn { flex: 1 1 28%; padding: 8px 5px; font-size: 11px; }
+  .timer-ring { width: min(72vw, 250px); border-width: 7px; }
+  .timer-display { font-size: clamp(44px, 14vw, 64px); letter-spacing: 1px; }
+  .timer-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .timer-actions > * { min-height: 46px; }
+  .reward-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .reward { padding: 12px; min-width: 0; }
+  .reward h3 { overflow-wrap: anywhere; }
+  .history-item { overflow-wrap: anywhere; }
+  .profile-edit { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .avatar-big { margin: 0 auto; }
+  .swatches { gap: 10px; }
+  .swatch { width: 40px; height: 40px; }
+  .bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(42px, auto));
+    gap: 4px;
+    padding: 6px max(8px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+    background: var(--panel);
+    border-top: 2px solid var(--line);
+    box-shadow: 0 -3px 0 rgba(0,0,0,.06);
+  }
+  .bottom-nav .nav-btn {
+    min-height: 42px;
+    min-width: 0;
+    padding: 5px 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.1;
+    overflow: hidden;
+    border-width: 1px;
+  }
+  .bottom-nav .nav-btn .nav-icon { flex: 0 0 auto; font-size: 16px; }
+  .bottom-nav .nav-btn .nav-text {
+    min-width: 0;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .toast {
+    bottom: calc(112px + env(safe-area-inset-bottom));
+    width: calc(100% - 28px);
+    max-width: 420px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 390px) {
+  .app { padding-left: 9px; padding-right: 9px; }
+  .topbar { margin-left: -9px; margin-right: -9px; padding-left: 9px; padding-right: 9px; }
+  .brand h1 { font-size: 13px; letter-spacing: .5px; }
+  .top-actions { gap: 5px; }
+  .icon-btn { width: 38px; height: 38px; }
+  .stats { gap: 5px; }
+  .stat { padding: 9px 6px; }
+  .stat-label { font-size: 8px; }
+  .reward-grid { grid-template-columns: minmax(0, 1fr); }
+  .bottom-nav .nav-btn { gap: 5px; }
+  .bottom-nav .nav-btn .nav-text { font-size: 10px; }
+}
+@media (max-width: 340px) {
+  .bottom-nav .nav-btn { flex-direction: column; gap: 2px; }
+  .bottom-nav .nav-btn .nav-text { font-size: 9px; }
+  .form-actions { grid-template-columns: minmax(0, 1fr); }
+}
+
+.reward-grid .form-actions{display:flex;gap:6px;flex-wrap:wrap}.reward-grid .pixel-btn{flex:1;min-width:95px}.reward-grid .mini-btn{min-width:36px;min-height:40px}@media(max-width:760px){.reward-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reward-grid .form-actions{gap:5px}.reward-grid .pixel-btn{font-size:11px;padding:8px 5px;min-width:0}}@media(max-width:390px){.reward-grid{grid-template-columns:1fr}}
+
+/* NekoQuest visual refresh — inspired by the provided pixel-RPG reference */
+:root{
+ --bg:#080f1d;--panel:#101a2c;--panel2:#17243a;--line:#243653;
+ --text:#f1f3ff;--muted:#9baac7;--accent:#a879ff;--accentText:#fff;
+ --danger:#ff7c9b;--shadow:0 10px 28px rgba(0,0,0,.18);--pixel:0px;
+}
+body{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.45;background:radial-gradient(ellipse at 80% -20%,#1c2450 0,transparent 38%),var(--bg)}
+.app{max-width:1120px;padding:18px 18px 110px}
+.topbar{border:0;border-bottom:1px solid #1d2b45;padding:10px 0 16px;margin-bottom:20px}
+.brand{gap:9px}.pixel-cat-img{width:42px;height:42px;image-rendering:pixelated;filter:drop-shadow(0 0 10px #8c5cff44)}
+.brand h1{font-family:ui-monospace,monospace;font-size:20px;letter-spacing:.6px;font-weight:850}.brand h1 span{color:#bd9aff}
+.pixel-btn,.icon-btn,.nav-btn,.tab-btn{border:1px solid var(--line);border-radius:13px;background:linear-gradient(180deg,#17243a,#111b2e);box-shadow:none;padding:10px 13px;font-weight:650;transition:background .15s,border-color .15s,transform .15s}
+.pixel-btn:hover,.icon-btn:hover,.nav-btn:hover,.tab-btn:hover{border-color:#9c73ff}
+.pixel-btn:active,.icon-btn:active,.nav-btn:active,.tab-btn:active{transform:scale(.98);box-shadow:none}
+.primary{background:linear-gradient(135deg,#9b65ff,#7d4df1);color:#fff;border-color:#aa84ff;box-shadow:0 5px 18px #8857ff35}
+.icon-btn{border-radius:13px;width:42px;height:42px}
+.layout{grid-template-columns:220px minmax(0,1fr);gap:22px}
+.profile-mini,.panel,.stat,.task,.calendar-day,.reward,.timer-card{background:linear-gradient(145deg,#121e32,#0e1728);border:1px solid #223452;box-shadow:none;border-radius:17px}
+.profile-mini{padding:17px}.avatar{border-radius:17px;border:2px solid #9d71ff;background:#1b2542}
+.xp-track{height:9px;border:0;border-radius:99px;overflow:hidden;background:#25324b}.xp-fill{background:linear-gradient(90deg,#8759ff,#c69cff);border-radius:99px}
+.nav{gap:5px}.nav-btn{border-color:transparent;background:transparent;border-radius:12px;padding:11px 12px;color:var(--muted)}
+.nav-btn.active{background:#241c49;color:#d7c4ff;border-color:#48317a}
+.page-heading{align-items:center}.page-heading h2{font-size:24px;letter-spacing:-.5px}.eyebrow{color:#b89aff;letter-spacing:1.2px}
+.stats{gap:10px}.stat{padding:14px}.stat-label{font-size:10px;letter-spacing:.65px}.stat-value{color:#c1a0ff;font-size:25px}
+.panel{padding:16px;margin-bottom:14px}.panel h3{font-size:15px;font-weight:750}
+.task-list{gap:8px}.task{border-radius:13px;padding:12px;border-color:#1d2d48;background:#121e32;grid-template-columns:24px minmax(0,1fr) auto;gap:10px}
+.check{border-radius:7px;border-color:#7d91b5}.task.done .check{background:#65d7b1;border-color:#65d7b1;color:#09221b}
+.task-title{font-weight:650;font-size:13px}.task-meta{font-size:11px;color:#98a9c8}.tag{border-radius:7px;border-color:#2b3c5a}
+.mini-btn{border:1px solid #2b3d5b;border-radius:9px;background:#101a2b;padding:7px 9px}
+.empty{border:1px dashed #314565;border-radius:14px}
+.filters{gap:7px}.tab-btn{border-radius:10px;background:#111c30;padding:8px 12px}.tab-btn.active{background:#8e5cff;color:white;border-color:#a57aff}
+.field label{letter-spacing:.2px;text-transform:none;font-size:12px}.field input,.field select,.field textarea,input,select{border:1px solid #2a3b5a;border-radius:11px;background:#0a1323;padding:12px;color:var(--text)}
+.field textarea{min-height:90px}
+.calendar-grid{gap:5px}.calendar-day{border-radius:10px;min-height:58px;background:#0d1728}.calendar-day.today{border-color:#ad87ff}.calendar-day.selected{background:#8f5cff;color:white;border-color:#b69aff}.calendar-day .dot{border-radius:99px;background:#bd9aff}
+.timer-card{padding:20px}.timer-ring{border-radius:50%;border:8px solid #4b3588;outline:0;box-shadow:inset 0 0 0 5px #111b2e;background:radial-gradient(circle,#172039,#0b1424)}.timer-ring.running{border-color:#ad83ff}
+.timer-display{font-family:ui-monospace,monospace;letter-spacing:0;font-weight:750}
+.reward-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.reward{padding:14px;border-radius:15px;background:linear-gradient(145deg,#14223a,#0f192a)}.reward-icon{font-size:28px}.reward h3{font-size:13px}.reward-status{color:#c2a1ff}
+.history-item{border:1px solid #223452;border-left:3px solid #a57aff;border-radius:12px;background:#111c30;padding:12px}
+.profile-edit{gap:20px}.avatar-big{border-radius:24px}
+.swatch{border-radius:50%;width:34px;height:34px}.swatch.active{outline:2px solid #c5a6ff}
+.notice{border:1px solid #3a2b60;border-left:3px solid #a57aff;border-radius:10px;background:#181b35}
+.bottom-nav{background:rgba(8,15,29,.94);backdrop-filter:blur(18px);border-top:1px solid #263653;box-shadow:0 -8px 25px #0003}
+.toast{background:#a879ff;color:#fff;border:1px solid #c2a4ff;border-radius:13px;box-shadow:0 10px 30px #0005}
+dialog{border-radius:18px!important}
+body.light{--bg:#f4f5fc;--panel:#fff;--panel2:#edf0fa;--line:#d9deee;--text:#24263a;--muted:#68718a;--shadow:0 8px 24px #29305012;background:var(--bg)}
+body.light .pixel-btn,body.light .icon-btn,body.light .nav-btn,body.light .tab-btn{background:#fff;color:var(--text)}
+body.light .profile-mini,body.light .panel,body.light .stat,body.light .task,body.light .calendar-day,body.light .reward,body.light .timer-card{background:#fff;border-color:#e0e4f1}
+body.light .field input,body.light .field select,body.light .field textarea,body.light input,body.light select{background:#f7f8fd;color:var(--text);border-color:#dce1ef}
+body.light .bottom-nav{background:rgba(255,255,255,.94)}
+@media(max-width:760px){
+ .app{padding:10px 13px calc(112px + env(safe-area-inset-bottom))}
+ .topbar{position:sticky;top:0;z-index:9;background:rgba(8,15,29,.92);backdrop-filter:blur(16px);margin:0 -13px 17px;padding:10px 13px;border-bottom:1px solid #243653}
+ .brand h1{font-size:18px}.pixel-cat-img{width:38px;height:38px}
+ .layout{display:block}.page-heading{align-items:flex-start;flex-direction:row;gap:10px;margin-bottom:15px}.page-heading h2{font-size:23px}
+ .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.stat{padding:11px 9px;border-radius:14px}.stat-label{font-size:9px;letter-spacing:0}.stat-value{font-size:21px}
+ .panel{padding:13px;border-radius:15px}.task{grid-template-columns:24px minmax(0,1fr);padding:11px 10px}.task-actions{grid-column:2;justify-content:flex-end}
+ .bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 7px calc(7px + env(safe-area-inset-bottom))}
+ .bottom-nav .nav-btn{border-radius:12px;min-height:48px;padding:6px 2px;gap:3px;background:transparent}
+ .bottom-nav .nav-btn.active{background:#251d4a;border-color:#49347d;color:#d8c7ff}
+ .bottom-nav .nav-btn .nav-icon{font-size:17px}.bottom-nav .nav-btn .nav-text{font-size:9px;white-space:nowrap;overflow-wrap:normal}
+ .reward-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.reward{padding:11px}.reward h3{font-size:12px}
+ .calendar-day{min-height:48px;padding:5px 2px}.timer-ring{width:min(68vw,250px)}
+ .field input,.field select,.field textarea,input,select{font-size:16px;min-height:44px}
+}
+@media(max-width:380px){.app{padding-left:9px;padding-right:9px}.topbar{margin-left:-9px;margin-right:-9px;padding-left:9px;padding-right:9px}.brand h1{font-size:16px}.stats{gap:5px}.stat{padding:9px 6px}.stat-value{font-size:18px}.bottom-nav .nav-btn .nav-text{font-size:8px}.reward-grid{grid-template-columns:1fr}}
+
+
+/* Companion sprite + subtle pixel-RPG motion */
+.cat-companion{display:flex;align-items:center;gap:14px;padding:12px 15px;margin:0 0 16px;border:1px solid #2a3156;border-radius:16px;background:linear-gradient(110deg,#171b3a,#111a2d 72%);overflow:hidden}
+.cat-scene{width:94px;height:78px;flex:0 0 94px;position:relative;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 85%,#4b347d55,transparent 65%)}
+.cat-sprite{width:66px;height:66px;image-rendering:pixelated;filter:drop-shadow(0 5px 0 #070b17);animation:catIdle 2.4s ease-in-out infinite;transform-origin:50% 80%}
+.pixel-star{position:absolute;color:#e8c2ff;animation:twinkle 1.8s steps(2,end) infinite;font-size:15px}.star-one{left:7px;top:11px}.star-two{right:8px;top:23px;animation-delay:.5s}.star-three{right:20px;top:4px;animation-delay:1s}
+.cat-companion-copy{display:grid;gap:3px;min-width:0}.cat-companion-copy strong{font-size:13px;color:#e8ddff}.cat-companion-copy span{font-size:11px;color:#aab5d3}.cat-mood{display:flex;gap:4px;margin-top:5px}.cat-mood i{display:block;width:15px;height:5px;background:#a879ff;border-radius:2px}.cat-mood i:nth-child(4),.cat-mood i:nth-child(5){background:#34405d}
+@keyframes catIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes twinkle{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@media(prefers-reduced-motion:reduce){.cat-sprite,.pixel-star{animation:none}}
+@media(max-width:760px){.cat-companion{padding:9px 11px;gap:9px;margin-bottom:13px}.cat-scene{width:76px;height:65px;flex-basis:76px}.cat-sprite{width:58px;height:58px}.cat-companion-copy strong{font-size:12px}.cat-companion-copy span{font-size:10px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><img class="pixel-cat-img" src="cat-192.png" alt="Gato pixel art" width="38" height="38"><h1>NEKO<span>QUEST</span></h1></div>
+  <div class="top-actions"><button class="icon-btn" id="installApp" aria-label="Instalar aplicativo" title="Instalar aplicativo">⬇</button><button class="icon-btn" id="quickTheme" aria-label="Alternar tema" title="Alternar tema">◐</button><button class="icon-btn" id="quickProfile" aria-label="Editar perfil" title="Editar perfil">☺</button></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="profile-mini"><div class="avatar" id="sideAvatar">🐈</div><h2 id="sideName">Aventureiro</h2><div class="muted tiny" id="sideLevel">NÍVEL 1 · INICIANTE</div><div class="xp-track"><div class="xp-fill" id="sideXpBar"></div></div><div class="row between tiny"><span id="sideXp">0 / 100 XP</span><span id="sideCoins">◆ 0</span></div></div>
+  <nav class="nav" aria-label="Navegação principal">
+    <button class="nav-btn active" data-page="tasks"><span>▣</span> Missões</button>
+    <button class="nav-btn" data-page="calendar"><span>▦</span> Calendário</button>
+    <button class="nav-btn" data-page="pomodoro"><span>◷</span> Pomodoro</button>
+    <button class="nav-btn" data-page="history"><span>↺</span> Histórico</button>
+    <button class="nav-btn" data-page="rewards"><span>★</span> Recompensas</button>
+    <button class="nav-btn" data-page="profile"><span>☺</span> Meu perfil</button>
+  </nav>
+</aside>
+<main class="main">
+<section class="page active" id="page-tasks">
+  <div class="page-heading"><div><div class="eyebrow">SEU ESPAÇO DE PROGRESSO</div><h2>Quadro de missões</h2><div class="muted">Um passo de cada vez. Você consegue.</div></div><button class="pixel-btn primary" id="newTaskTop">＋ Nova missão</button></div>
+  <div class="cat-companion" aria-label="Seu companheiro gato pixel art">
+    <div class="cat-scene"><span class="pixel-star star-one">✦</span><span class="pixel-star star-two">✧</span>
+      <svg class="cat-sprite" viewBox="0 0 64 64" role="img" aria-label="Gatinho aventureiro pixel art" shape-rendering="crispEdges">
+        <rect x="12" y="15" width="8" height="8" fill="#22243e"/><rect x="20" y="7" width="8" height="8" fill="#22243e"/><rect x="36" y="7" width="8" height="8" fill="#22243e"/><rect x="44" y="15" width="8" height="8" fill="#22243e"/>
+        <rect x="12" y="23" width="8" height="24" fill="#22243e"/><rect x="20" y="15" width="24" height="8" fill="#22243e"/><rect x="44" y="23" width="8" height="24" fill="#22243e"/><rect x="20" y="47" width="24" height="8" fill="#22243e"/>
+        <rect x="20" y="23" width="24" height="24" fill="#aab6d8"/><rect x="20" y="15" width="8" height="8" fill="#aab6d8"/><rect x="36" y="15" width="8" height="8" fill="#aab6d8"/>
+        <rect x="20" y="15" width="8" height="8" fill="#f2a0bd"/><rect x="36" y="15" width="8" height="8" fill="#f2a0bd"/>
+        <rect x="24" y="28" width="6" height="8" fill="#1a2035"/><rect x="36" y="28" width="6" height="8" fill="#1a2035"/><rect x="26" y="29" width="2" height="3" fill="#ffffff"/><rect x="38" y="29" width="2" height="3" fill="#ffffff"/>
+        <rect x="30" y="37" width="4" height="3" fill="#ed8eac"/><rect x="26" y="41" width="12" height="2" fill="#333b5b"/>
+        <rect x="16" y="49" width="8" height="7" fill="#7c5ad9"/><rect x="40" y="49" width="8" height="7" fill="#7c5ad9"/><rect x="24" y="47" width="16" height="8" fill="#bb8bff"/>
+        <rect x="9" y="34" width="7" height="5" fill="#22243e"/><rect x="6" y="31" width="6" height="5" fill="#aab6d8"/><rect x="48" y="34" width="7" height="5" fill="#22243e"/>
+        <rect x="28" y="45" width="8" height="4" fill="#ffcf75"/>
+      </svg>
+      <span class="pixel-star star-three">✦</span>
+    </div>
+    <div class="cat-companion-copy"><strong>Seu companheiro</strong><span>Pequenas missões, grandes conquistas.</span><div class="cat-mood"><i></i><i></i><i></i><i></i><i></i></div></div>
+  </div>
+  <div class="stats"><div class="stat"><div class="stat-label">Missões</div><div class="stat-value" id="statTotal">0</div></div><div class="stat"><div class="stat-label">Concluídas</div><div class="stat-value" id="statDone">0</div></div><div class="stat"><div class="stat-label">XP total</div><div class="stat-value" id="statXP">0</div></div></div>
+  <div class="panel"><div class="row between wrap"><h3>Lista de tarefas</h3><span class="muted tiny" id="todayLabel"></span></div><div class="filters" id="taskFilters"><button class="tab-btn active" data-filter="all">Todas</button><button class="tab-btn" data-filter="active">Pendentes</button><button class="tab-btn" data-filter="done">Concluídas</button></div><div class="task-list" id="taskList"></div></div>
+</section>
+<section class="page" id="page-calendar">
+  <div class="page-heading"><div><div class="eyebrow">PLANEJE COM CALMA</div><h2>Calendário</h2><div class="muted">Veja as missões por data.</div></div><button class="pixel-btn primary" id="calendarAdd">＋ Criar</button></div>
+  <div class="panel"><div class="calendar-controls"><button class="pixel-btn" id="prevMonth" aria-label="Mês anterior">←</button><strong id="monthLabel"></strong><button class="pixel-btn" id="nextMonth" aria-label="Próximo mês">→</button></div><div class="calendar-grid" id="calendarGrid"></div></div>
+  <div class="panel"><h3 id="selectedDateTitle">Missões do dia</h3><div id="dayTasks" class="task-list"></div></div>
+</section>
+<section class="page" id="page-pomodoro">
+  <div class="page-heading"><div><div class="eyebrow">FOCO EM BLOCOS</div><h2>Pomodoro</h2><div class="muted">Trabalhe com foco e faça pausas.</div></div></div>
+  <div class="timer-card"><div class="timer-mode"><button class="tab-btn active" data-minutes="25" data-mode="Foco">Foco · 25 min</button><button class="tab-btn" data-minutes="5" data-mode="Pausa curta">Pausa · 5 min</button><button class="tab-btn" data-minutes="15" data-mode="Pausa longa">Pausa longa · 15 min</button></div><div class="timer-ring" id="timerRing"><div class="eyebrow" id="timerMode">HORA DO FOCO</div><div class="timer-display" id="timerDisplay">25:00</div><div class="muted tiny" id="timerHint">Uma coisa por vez.</div></div><div class="timer-actions"><button class="pixel-btn primary" id="timerStart">▶ Iniciar</button><button class="pixel-btn" id="timerReset">↺ Reiniciar</button></div><p class="muted tiny" id="pomodoroCount">Sessões de foco concluídas: 0</p><div class="notice">Complete uma sessão de foco para registrar no histórico e ganhar 10 XP. O timer continua contando enquanto esta aba estiver aberta.</div></div>
+</section>
+<section class="page" id="page-history">
+  <div class="page-heading"><div><div class="eyebrow">SEU CAMINHO ATÉ AQUI</div><h2>Histórico</h2><div class="muted">Cada pequeno avanço conta.</div></div><button class="pixel-btn" id="exportData">⇩ Exportar</button></div>
+  <div class="stats"><div class="stat"><div class="stat-label">Eventos</div><div class="stat-value" id="historyCount">0</div></div><div class="stat"><div class="stat-label">Foco</div><div class="stat-value" id="focusCount">0</div></div><div class="stat"><div class="stat-label">Dias ativos</div><div class="stat-value" id="activeDays">0</div></div></div>
+  <div class="panel"><div class="row between wrap"><h3>Atividade recente</h3><button class="mini-btn" id="clearHistory">Limpar histórico</button></div><div class="history-list" id="historyList"></div></div>
+</section>
+<section class="page" id="page-rewards">
+  <div class="page-heading"><div><div class="eyebrow">RECOMPENSAS DA VIDA REAL</div><h2>Baú de recompensas</h2><div class="muted">Defina pequenas coisas legais para fazer depois das missões.</div></div><button class="pixel-btn primary" id="addReward">＋ Nova</button></div>
+  <div class="stats"><div class="stat"><div class="stat-label">Suas moedas</div><div class="stat-value" id="rewardCoins">0</div></div><div class="stat"><div class="stat-label">Missões feitas</div><div class="stat-value" id="rewardDone">0</div></div><div class="stat"><div class="stat-label">Resgatadas</div><div class="stat-value" id="rewardRedeemed">0</div></div></div>
+  <div class="notice">Cada missão concluída rende moedas. Crie recompensas que façam sentido para você — como jogar, assistir a um episódio, tomar um café ou tirar uma pausa. Resgatar uma recompensa desconta as moedas do seu saldo.</div>
+  <div class="panel"><div class="row between wrap"><h3>Recompensas disponíveis</h3><span class="muted tiny">Edite os nomes e custos quando quiser</span></div><div class="reward-grid" id="rewardGrid"></div></div>
+  <div class="panel"><h3>Como funciona</h3><p class="muted tiny">As moedas são virtuais e servem para combinar esforço com descanso. Sugestão inicial: 1 moeda a cada 50 XP de missão. Sessões Pomodoro também rendem 1 moeda.</p></div>
+</section>
+<section class="page" id="page-profile">
+  <div class="page-heading"><div><div class="eyebrow">PERSONALIZE SUA JORNADA</div><h2>Meu perfil</h2><div class="muted">Seu nome, seu estilo, seu ritmo.</div></div></div>
+  <div class="panel"><form id="profileForm"><div class="profile-edit"><div><div class="avatar avatar-big" id="profileAvatarPreview">🐈</div><div class="field"><label for="profileEmoji">Avatar emoji</label><select id="profileEmoji"><option>🐈</option><option>🐱</option><option>🐸</option><option>🦊</option><option>🐼</option><option>🐙</option><option>👾</option><option>🌱</option><option>⭐</option></select></div></div><div><div class="field"><label for="profileName">Nome de jogador</label><input id="profileName" maxlength="30" placeholder="Seu nome"></div><div class="field"><label for="profileBio">Sobre você</label><textarea id="profileBio" maxlength="160" placeholder="Uma frase que te inspira..."></textarea></div><button class="pixel-btn primary" type="submit">Salvar perfil</button></div></div></form></div>
+  <div class="panel"><h3>Aparência</h3><div class="field"><label>Tema</label><div class="row wrap"><button class="pixel-btn" id="darkTheme">☾ Escuro</button><button class="pixel-btn" id="lightTheme">☼ Claro</button></div></div><div class="field"><label>Cor de destaque</label><div class="swatches" id="swatches"></div></div><div class="field"><label for="customColor">Cor personalizada</label><div class="row"><input id="customColor" type="color" value="#b8f36b" style="max-width:70px;height:42px;padding:3px"><button class="pixel-btn" id="applyColor">Aplicar cor</button></div></div><div class="notice">Os dados são salvos neste navegador. Para não perder seu progresso, exporte um backup pelo Histórico.</div><button class="pixel-btn" id="resetApp">Apagar todos os dados</button></div>
+</section>
+</main>
+</div>
+<nav class="bottom-nav" aria-label="Navegação móvel">
+<button class="nav-btn active" data-page="tasks"><span class="nav-icon">▣</span><span class="nav-text">Missões</span></button>
+<button class="nav-btn" data-page="calendar"><span class="nav-icon">▦</span><span class="nav-text">Agenda</span></button>
+<button class="nav-btn" data-page="pomodoro"><span class="nav-icon">◷</span><span class="nav-text">Foco</span></button>
+<button class="nav-btn" data-page="history"><span class="nav-icon">↺</span><span class="nav-text">Histórico</span></button>
+<button class="nav-btn" data-page="rewards"><span class="nav-icon">★</span><span class="nav-text">Prêmios</span></button>
+<button class="nav-btn" data-page="profile"><span class="nav-icon">☺</span><span class="nav-text">Perfil</span></button>
+</nav>
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+<dialog id="taskDialog" style="width:min(500px,calc(100% - 24px));background:var(--panel);color:var(--text);border:2px solid var(--accent);box-shadow:var(--shadow);padding:0">
+<form id="taskForm" style="padding:18px">
+<div class="row between"><h2 id="taskDialogTitle" style="font-size:18px;margin:0 0 15px">Nova missão</h2><button class="mini-btn" type="button" id="closeTaskDialog" aria-label="Fechar">✕</button></div>
+<input type="hidden" id="taskId">
+<div class="field"><label for="taskTitle">Nome da missão</label><input id="taskTitle" maxlength="80" required placeholder="Ex.: Estudar JavaScript"></div>
+<div class="field-grid"><div class="field"><label for="taskDifficulty">Dificuldade</label><select id="taskDifficulty"><option value="50">Fácil · 50 XP</option><option value="100" selected>Média · 100 XP</option><option value="250">Difícil · 250 XP</option></select></div><div class="field"><label for="taskPriority">Prioridade</label><select id="taskPriority"><option value="baixa">Baixa</option><option value="media" selected>Média</option><option value="alta">Alta</option></select></div></div>
+<div class="field"><label for="taskDate">Data</label><input id="taskDate" type="date"></div>
+<div class="form-actions"><button class="pixel-btn primary" type="submit">Salvar missão</button><button class="pixel-btn" type="button" id="cancelTask">Cancelar</button></div>
+</form></dialog>
+
+<dialog id="rewardDialog" style="width:min(500px,calc(100% - 24px));background:var(--panel);color:var(--text);border:2px solid var(--accent);box-shadow:var(--shadow);padding:0">
+<form id="rewardForm" style="padding:18px">
+<div class="row between"><h2 id="rewardDialogTitle" style="font-size:18px;margin:0 0 15px">Nova recompensa</h2><button class="mini-btn" type="button" id="closeRewardDialog" aria-label="Fechar">✕</button></div>
+<input type="hidden" id="rewardId">
+<div class="field"><label for="rewardName">O que você quer fazer?</label><input id="rewardName" maxlength="70" required placeholder="Ex.: Jogar 30 minutos"></div>
+<div class="field-grid"><div class="field"><label for="rewardIcon">Ícone</label><select id="rewardIcon"><option>🎮</option><option>🍿</option><option>☕</option><option>📚</option><option>🛁</option><option>🌳</option><option>🍰</option><option>🎨</option><option>💤</option><option>🐱</option><option>🎧</option><option>🛍️</option></select></div><div class="field"><label for="rewardCost">Custo em moedas</label><input id="rewardCost" type="number" min="1" max="9999" value="10" required></div></div>
+<div class="field"><label for="rewardDescription">Descrição (opcional)</label><input id="rewardDescription" maxlength="120" placeholder="Ex.: Depois de terminar as tarefas do dia"></div>
+<div class="form-actions"><button class="pixel-btn primary" type="submit">Salvar recompensa</button><button class="pixel-btn" type="button" id="cancelReward">Cancelar</button></div>
+</form></dialog>
+
+<script>
+"use strict";
+const KEY="nekoquest_pixel_v2";
+const defaults={tasks:[],history:[],rewards:[{id:"r-game",name:"Jogar 30 minutos",icon:"🎮",cost:20,description:"Uma pausa divertida"},{id:"r-episode",name:"Assistir a um episódio",icon:"🍿",cost:25,description:"Descanse sem culpa"},{id:"r-coffee",name:"Tomar um café especial",icon:"☕",cost:15,description:"Um mimo para você"},{id:"r-walk",name:"Fazer um passeio",icon:"🌳",cost:30,description:"Sair e recarregar as energias"}],history:[],profile:{name:"Aventureiro",bio:"",emoji:"🐈"},theme:"dark",accent:"#b8f36b",focusSessions:0,coins:0};
+let data=loadData(),filter="all",calendarDate=new Date(),selectedDate=isoDate(new Date()),timerDuration=1500,timerLeft=1500,timerRunning=false,timerEnd=0,timerInterval=null,timerMode="Foco",toastTimer=null;
+const $=id=>document.getElementById(id);
+function loadData(){try{const x=JSON.parse(localStorage.getItem(KEY)||"null");return x&&typeof x==="object"?{...structuredClone(defaults),...x,profile:{...defaults.profile,...x.profile},tasks:Array.isArray(x.tasks)?x.tasks:[],rewards:Array.isArray(x.rewards)?x.rewards:structuredClone(defaults.rewards),history:Array.isArray(x.history)?x.history:[]}:structuredClone(defaults)}catch{return structuredClone(defaults)}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch{notify("Não foi possível salvar. Verifique o espaço do navegador.")}}
+function isoDate(d){const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function notify(s){const t=$("toast");t.textContent=s;t.classList.remove("hidden");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.add("hidden"),2400)}
+function logEvent(type,title,detail=""){data.history.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),type,title,detail,date:new Date().toISOString()});data.history=data.history.slice(0,500)}
+function xpTotal(){return data.tasks.reduce((n,t)=>n+(t.done?Number(t.xp):0),0)+data.focusSessions*10}
+function levelInfo(){const xp=xpTotal();return{level:Math.floor(xp/100)+1,within:xp%100,title:xp>=900?"Lendário":xp>=500?"Elite":xp>=200?"Aventureiro":"Iniciante"}}
+function applyTheme(){document.body.classList.toggle("light",data.theme==="light");document.documentElement.style.setProperty("--accent",data.accent);const rgb=hexToRgb(data.accent);const lum=(.299*rgb[0]+.587*rgb[1]+.114*rgb[2]);document.documentElement.style.setProperty("--accentText",lum>155?"#182018":"#ffffff");$("customColor").value=data.accent;document.querySelectorAll(".swatch").forEach(b=>b.classList.toggle("active",b.dataset.color===data.accent));save()}
+function hexToRgb(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function setTheme(theme){data.theme=theme;applyTheme()}
+function setAccent(color){if(!/^#[0-9a-f]{6}$/i.test(color))return;data.accent=color;applyTheme()}
+function showPage(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));if(page==="calendar")renderCalendar();if(page==="history")renderHistory();if(page==="rewards")renderRewards();if(page==="profile")renderProfile();window.scrollTo({top:0,behavior:"smooth"})}
+function taskMarkup(t){return `<article class="task ${t.done?"done":""}"><button class="check" aria-label="${t.done?"Reabrir":"Concluir"} ${esc(t.title)}" data-toggle="${t.id}">${t.done?"✓":""}</button><div><div class="task-title">${esc(t.title)}</div><div class="task-meta"><span class="tag">✦ ${Number(t.xp)} XP</span><span class="tag">${esc(t.priority||"media")} prioridade</span>${t.date?`<span class="tag">▦ ${esc(t.date)}</span>`:""}${t.done&&t.completedAt?`<span class="tag">✓ ${new Date(t.completedAt).toLocaleDateString("pt-BR")}</span>`:""}</div></div><div class="task-actions"><button class="mini-btn" data-edit="${t.id}" aria-label="Editar tarefa">✎</button><button class="mini-btn" data-delete="${t.id}" aria-label="Excluir tarefa">×</button></div></article>`}
+function renderTasks(){const list=$("taskList");let items=[...data.tasks].filter(t=>filter==="all"||(filter==="active"&&!t.done)||(filter==="done"&&t.done));items.sort((a,b)=>Number(a.done)-Number(b.done)||({alta:0,media:1,baixa:2}[a.priority]??1)-({alta:0,media:1,baixa:2}[b.priority]??1)||(a.date||"9999").localeCompare(b.date||"9999"));list.innerHTML=items.length?items.map(taskMarkup).join(""):'<div class="empty">Nenhuma missão por aqui.<br>Adicione uma tarefa para começar!</div>';const done=data.tasks.filter(t=>t.done).length;$("statTotal").textContent=data.tasks.length;$("statDone").textContent=done;$("statXP").textContent=xpTotal();$("todayLabel").textContent=new Date().toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"});renderPlayer()}
+function renderPlayer(){const x=levelInfo();$("sideAvatar").textContent=data.profile.emoji;$("sideName").textContent=data.profile.name;$("sideLevel").textContent=`NÍVEL ${x.level} · ${x.title.toUpperCase()}`;$("sideXp").textContent=`${x.within} / 100 XP`;$("sideXpBar").style.width=x.within+"%";$("sideCoins").textContent="◆ "+data.coins}
+function openTask(id=null){$("taskForm").reset();$("taskId").value="";$("taskDialogTitle").textContent=id?"Editar missão":"Nova missão";if(id){const t=data.tasks.find(x=>x.id===id);if(!t)return;$("taskId").value=t.id;$("taskTitle").value=t.title;$("taskDifficulty").value=t.xp;$("taskPriority").value=t.priority||"media";$("taskDate").value=t.date||""}else{$("taskDate").value=selectedDate||isoDate(new Date())}$("taskDialog").showModal();setTimeout(()=>$("taskTitle").focus(),50)}
+function toggleTask(id){const t=data.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;if(t.done){t.completedAt=new Date().toISOString();data.coins+=Math.max(1,Math.round(Number(t.xp)/50));logEvent("task","Missão concluída: "+t.title,`+${t.xp} XP`);notify(`Missão concluída! +${t.xp} XP e moedas ✦`)}else{t.completedAt=null;data.coins=Math.max(0,data.coins-Math.max(1,Math.round(Number(t.xp)/50)));logEvent("task","Missão reaberta: "+t.title,"XP removido até concluir novamente");notify("Missão reaberta.")}save();renderAll()}
+function deleteTask(id){const t=data.tasks.find(x=>x.id===id);if(!t)return;if(!confirm(`Excluir a missão “${t.title}”?`))return;data.tasks=data.tasks.filter(x=>x.id!==id);logEvent("delete","Missão excluída: "+t.title);save();renderAll()}
+function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getMonth();$("monthLabel").textContent=new Date(y,m,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"});const first=new Date(y,m,1),offset=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();let out=["SEG","TER","QUA","QUI","SEX","SÁB","DOM"].map(d=>`<div class="weekday">${d}</div>`).join("");for(let i=0;i<42;i++){let day,date,muted=false;if(i<offset){day=prevDays-offset+i+1;date=isoDate(new Date(y,m-1,day));muted=true}else if(i>=offset+days){day=i-offset-days+1;date=isoDate(new Date(y,m+1,day));muted=true}else{day=i-offset+1;date=isoDate(new Date(y,m,day))}const has=data.tasks.some(t=>t.date===date);out+=`<button class="calendar-day ${muted?"muted-day":""} ${date===isoDate(new Date())?"today":""} ${date===selectedDate?"selected":""}" data-date="${date}">${day}${has?'<span class="dot"></span>':""}</button>`} $("calendarGrid").innerHTML=out;$("selectedDateTitle").textContent=new Date(selectedDate+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});const tasks=data.tasks.filter(t=>t.date===selectedDate);$("dayTasks").innerHTML=tasks.length?tasks.map(taskMarkup).join(""):'<div class="empty">Nenhuma missão marcada para este dia.</div>'}
+function renderHistory(){const hist=data.history;$("historyCount").textContent=hist.length;$("focusCount").textContent=data.focusSessions;$("activeDays").textContent=new Set(hist.map(h=>h.date.slice(0,10))).size;$("historyList").innerHTML=hist.length?hist.map(h=>`<div class="history-item"><strong>${esc(h.title)}</strong><small>${new Date(h.date).toLocaleString("pt-BR")} ${h.detail?" · "+esc(h.detail):""}</small></div>`).join(""):'<div class="empty">Seu histórico aparecerá aqui quando você concluir missões ou sessões de foco.</div>'}
+function renderRewards(){
+  const rewards=Array.isArray(data.rewards)?data.rewards:[];
+  $("rewardCoins").textContent=data.coins;
+  $("rewardDone").textContent=data.tasks.filter(t=>t.done).length;
+  $("rewardRedeemed").textContent=data.history.filter(h=>h.type==="reward").length;
+  $("rewardGrid").innerHTML=rewards.length?rewards.map(r=>`<article class="reward"><div class="reward-icon">${esc(r.icon||"🐾")}</div><h3>${esc(r.name)}</h3><p>${esc(r.description||"Uma recompensa para você")}</p><div class="reward-status">◆ ${Number(r.cost)} moedas</div><div class="form-actions" style="margin-top:12px"><button class="pixel-btn primary" data-redeem-reward="${esc(r.id)}" ${data.coins<Number(r.cost)?"disabled":""}>Resgatar</button><button class="mini-btn" data-edit-reward="${esc(r.id)}" aria-label="Editar recompensa">✎</button><button class="mini-btn" data-delete-reward="${esc(r.id)}" aria-label="Excluir recompensa">×</button></div></article>`).join(""):'<div class="empty">Seu baú está vazio. Adicione uma recompensa que você gostaria de conquistar.</div>';
+}
+function openReward(id=null){$("rewardForm").reset();$("rewardId").value="";$("rewardDialogTitle").textContent=id?"Editar recompensa":"Nova recompensa";$("rewardCost").value="10";if(id){const r=data.rewards.find(x=>x.id===id);if(!r)return;$("rewardId").value=r.id;$("rewardName").value=r.name;$("rewardIcon").value=r.icon||"🐾";$("rewardCost").value=r.cost;$("rewardDescription").value=r.description||""}$("rewardDialog").showModal();setTimeout(()=>$("rewardName").focus(),50)}
+function redeemReward(id){const r=data.rewards.find(x=>x.id===id);if(!r)return;if(data.coins<Number(r.cost)){notify("Ainda faltam moedas para essa recompensa.");return}if(!confirm(`Resgatar “${r.name}” por ${r.cost} moedas?`))return;data.coins-=Number(r.cost);logEvent("reward","Recompensa resgatada: "+r.name,`-${r.cost} moedas`);save();renderAll();notify("Recompensa resgatada! Aproveite esse momento. 🐾")}
+function renderProfile(){$("profileName").value=data.profile.name;$("profileBio").value=data.profile.bio;$("profileEmoji").value=data.profile.emoji;$("profileAvatarPreview").textContent=data.profile.emoji;renderPlayer()}
+function renderAll(){renderTasks();renderCalendar();renderHistory();renderRewards();renderProfile()}
+function chooseTimer(minutes,mode){pauseTimer();timerMode=mode;timerDuration=minutes*60;timerLeft=timerDuration;document.querySelectorAll("[data-minutes]").forEach(b=>b.classList.toggle("active",Number(b.dataset.minutes)===minutes));$("timerMode").textContent=mode.toUpperCase();$("timerHint").textContent=mode==="Foco"?"Uma coisa por vez.":"Respire. Você merece uma pausa.";updateTimerDisplay()}
+function updateTimerDisplay(){$("timerDisplay").textContent=`${String(Math.floor(timerLeft/60)).padStart(2,"0")}:${String(timerLeft%60).padStart(2,"0")}`;$("timerStart").textContent=timerRunning?"Ⅱ Pausar":"▶ Iniciar";$("timerRing").classList.toggle("running",timerRunning)}
+function pauseTimer(){timerRunning=false;clearInterval(timerInterval);timerInterval=null;updateTimerDisplay()}
+function startTimer(){if(timerRunning){pauseTimer();return}timerRunning=true;timerEnd=Date.now()+timerLeft*1000;updateTimerDisplay();timerInterval=setInterval(()=>{timerLeft=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));updateTimerDisplay();if(timerLeft<=0){pauseTimer();if(timerMode==="Foco"){data.focusSessions++;data.coins+=1;logEvent("focus","Sessão Pomodoro concluída","+10 XP · +1 moeda");notify("Pomodoro concluído! +10 XP e 1 moeda.");}else{logEvent("break","Pausa concluída",timerMode);notify("Pausa concluída. Hora de voltar quando estiver pronto!")}save();renderAll();if("Notification"in window&&Notification.permission==="granted")new Notification("NEKOQUEST",{body:timerMode==="Foco"?"Sessão de foco concluída!":"Sua pausa terminou."})}},250)}
+function renderSwatches(){const colors=["#b8f36b","#91d7ff","#c5a3ff","#ff9eac","#ffc66d","#72e0c0","#ffffff","#ff7bda"];$("swatches").innerHTML=colors.map(c=>`<button type="button" class="swatch ${c===data.accent?"active":""}" data-color="${c}" style="background:${c}" aria-label="Cor ${c}" title="${c}"></button>`).join("")}
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="nekoquest-backup.json";a.click();URL.revokeObjectURL(url);notify("Backup exportado.")}
+function renderAllWithSwatches(){renderAll();renderSwatches()}
+document.addEventListener("click",e=>{const nav=e.target.closest("[data-page]");if(nav){showPage(nav.dataset.page);return}const redeem=e.target.closest("[data-redeem-reward]");if(redeem){redeemReward(redeem.dataset.redeemReward);return}const editReward=e.target.closest("[data-edit-reward]");if(editReward){openReward(editReward.dataset.editReward);return}const delReward=e.target.closest("[data-delete-reward]");if(delReward){const r=data.rewards.find(x=>x.id===delReward.dataset.deleteReward);if(r&&confirm(`Excluir a recompensa “${r.name}”?`)){data.rewards=data.rewards.filter(x=>x.id!==r.id);save();renderAll();notify("Recompensa excluída.")}return}const tog=e.target.closest("[data-toggle]");if(tog){toggleTask(tog.dataset.toggle);return}const edit=e.target.closest("[data-edit]");if(edit){openTask(edit.dataset.edit);return}const del=e.target.closest("[data-delete]");if(del){deleteTask(del.dataset.delete);return}const date=e.target.closest("[data-date]");if(date){selectedDate=date.dataset.date;calendarDate=new Date(selectedDate+"T12:00:00");renderCalendar();return}const sw=e.target.closest("[data-color]");if(sw){setAccent(sw.dataset.color);renderSwatches();return}const mode=e.target.closest("[data-minutes]");if(mode){chooseTimer(Number(mode.dataset.minutes),mode.dataset.mode);return}const fil=e.target.closest("[data-filter]");if(fil){filter=fil.dataset.filter;document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b===fil));renderTasks()}});
+$("newTaskTop").addEventListener("click",()=>openTask());$("calendarAdd").addEventListener("click",()=>{showPage("tasks");openTask()});$("closeTaskDialog").addEventListener("click",()=>$("taskDialog").close());$("cancelTask").addEventListener("click",()=>$("taskDialog").close());
+$("taskForm").addEventListener("submit",e=>{e.preventDefault();const title=$("taskTitle").value.trim();if(!title)return;const id=$("taskId").value;const task={id:id||((crypto.randomUUID&&crypto.randomUUID())||String(Date.now())),title,xp:Number($("taskDifficulty").value),priority:$("taskPriority").value,date:$("taskDate").value,done:false};if(id){const old=data.tasks.find(t=>t.id===id);if(old){Object.assign(old,{title:task.title,xp:task.xp,priority:task.priority,date:task.date});logEvent("edit","Missão editada: "+title)}}else{data.tasks.unshift(task);logEvent("create","Missão criada: "+title,`Valor: ${task.xp} XP`)}save();$("taskDialog").close();renderAll();notify(id?"Missão atualizada!":"Nova missão criada!")});
+$("prevMonth").addEventListener("click",()=>{calendarDate.setMonth(calendarDate.getMonth()-1);renderCalendar()});$("nextMonth").addEventListener("click",()=>{calendarDate.setMonth(calendarDate.getMonth()+1);renderCalendar()});
+$("timerStart").addEventListener("click",startTimer);$("timerReset").addEventListener("click",()=>{pauseTimer();timerLeft=timerDuration;updateTimerDisplay()});
+$("profileForm").addEventListener("submit",e=>{e.preventDefault();data.profile.name=$("profileName").value.trim()||"Aventureiro";data.profile.bio=$("profileBio").value.trim();data.profile.emoji=$("profileEmoji").value;logEvent("profile","Perfil atualizado");save();renderAll();notify("Perfil salvo!")});$("profileEmoji").addEventListener("change",()=>$("profileAvatarPreview").textContent=$("profileEmoji").value);
+$("quickProfile").addEventListener("click",()=>showPage("profile"));$("quickTheme").addEventListener("click",()=>setTheme(data.theme==="dark"?"light":"dark"));$("darkTheme").addEventListener("click",()=>setTheme("dark"));$("lightTheme").addEventListener("click",()=>setTheme("light"));$("applyColor").addEventListener("click",()=>{setAccent($("customColor").value);renderSwatches();notify("Cor atualizada!")});
+$("addReward").addEventListener("click",()=>openReward());$("closeRewardDialog").addEventListener("click",()=>$ ("rewardDialog").close());$("cancelReward").addEventListener("click",()=>$ ("rewardDialog").close());
+$("rewardForm").addEventListener("submit",e=>{e.preventDefault();const name=$("rewardName").value.trim();const cost=Math.max(1,Math.min(9999,Number($("rewardCost").value)||1));if(!name)return;const id=$("rewardId").value;const reward={id:id||((crypto.randomUUID&&crypto.randomUUID())||String(Date.now())),name,icon:$("rewardIcon").value,cost,description:$("rewardDescription").value.trim()};if(id){const i=data.rewards.findIndex(r=>r.id===id);if(i>=0)data.rewards[i]=reward}else data.rewards.unshift(reward);logEvent("reward-edit",(id?"Recompensa editada: ":"Recompensa criada: ")+name,`${cost} moedas`);save();$("rewardDialog").close();renderAll();notify(id?"Recompensa atualizada!":"Recompensa criada!")});
+$("exportData").addEventListener("click",exportData);$("clearHistory").addEventListener("click",()=>{if(confirm("Apagar todos os registros do histórico? As missões e o XP serão mantidos.")){data.history=[];save();renderHistory();notify("Histórico limpo.")}});
+$("resetApp").addEventListener("click",()=>{if(confirm("Isso apaga todas as missões, XP, histórico e preferências deste navegador. Continuar?")){pauseTimer();data=structuredClone(defaults);save();applyTheme();renderAllWithSwatches();showPage("tasks");notify("Dados reiniciados.")}});
+window.addEventListener("beforeunload",()=>{if(timerRunning){timerLeft=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));save()}});
+
+let deferredInstallPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;$("installApp").classList.add("primary")});
+$("installApp").addEventListener("click",async()=>{if(deferredInstallPrompt){deferredInstallPrompt.prompt();const choice=await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;notify(choice.outcome==="accepted"?"Instalação iniciada!":"Você pode instalar depois pelo menu do navegador.")}else if(/iphone|ipad|ipod/i.test(navigator.userAgent)){notify("No Safari: toque em Compartilhar e depois ‘Adicionar à Tela de Início’.")}else{notify("Para instalar: abra o menu do navegador e escolha ‘Instalar app’ ou ‘Adicionar à tela inicial’. Use o site HTTPS do GitHub Pages.")}});
+if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}))}
+
+renderSwatches();applyTheme();renderAll();chooseTimer(25,"Foco");showPage("tasks");
+</script>
+</body>
+</html>
