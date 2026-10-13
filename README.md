@@ -1,57 +1,22 @@
-# NekoQuest 4.2 — Uma coisa de cada vez
+# NekoQuest 4.3 — tarefas, rotinas e diário
+
+Substitua os seis arquivos do aplicativo no mesmo local do seu site: index.html, service-worker.js, manifest.json, cat-192.png, cat-512.png e README.md. Mantenha a mesma origem/endereço para preservar o armazenamento do navegador. Faça um backup em Perfil antes de atualizar. Reabra e use Atualizar caso apareça o aviso.
 
 ## O que mudou
+- Início mantém apenas o próximo passo. Missões centraliza Lista, Agenda e Recorrentes.
+- Listas personalizadas, renomeação e filtro. Excluir uma lista mantém suas tarefas.
+- Rotinas com metas numéricas diárias, semanais (segunda a domingo), mensais ou anuais; registros com data e nota; sequências atuais e recordes. Alterar a meta recalcula as estatísticas. Atividades antigas podem ser registradas, mas datas futuras não.
+- Os registros medem progresso e NÃO concedem XP. Concluir uma missão concede XP e moedas e cria a próxima ocorrência. As duas ações são explícitas para evitar XP duplicado. Registros históricos de conclusão anteriores seguem preservados, separados das novas medições de quantidade.
+- Cronômetro para metas cuja unidade começa com “min” (ex.: minutos). Inicie, pause e registre a duração; confira o valor antes de salvar. Pomodoro continua na seção Foco.
+- Diário em Mais: notas por rotina, filtros, favoritos, negrito e itálico com prévia. As notas não executam HTML.
+- Agenda por dia, semana ou mês; lembretes únicos, diários, semanais e mensais; exportação .ics com alarmes. Datas e horários seguem o dispositivo. Um lembrete mensal no dia 31 não ocorre em meses sem esse dia.
+- Novos começos: contagem de dias desde que deixou um hábito, com opção de reiniciar.
+- Finanças, gatos em pixel art, personalização, modelos de tarefas e recompensas foram preservados. As imagens continuam embutidas no HTML.
 
-### Início
+## Limites desta versão web
+Dados ficam neste navegador; não há conta, sincronização entre dispositivos ou Health Connect. Não limpe os dados do site sem exportar um backup. O JSON de backup inclui o organizador.
 
-O início mostra o gatinho, o progresso do dia e apenas a próxima missão sugerida. O botão Começar foco inicia o Pomodoro nessa missão. A lista completa e o calendário ficam na aba Missões.
-
-A sugestão prioriza tarefas pendentes de hoje ou atrasadas, considerando prioridade, data e horário. Nos detalhes de uma tarefa, use Escolher como próximo passo para escolher manualmente.
-
-### Missões
-
-Há três visualizações dos mesmos registros:
-
-- Lista: tarefas, busca, filtros, prioridades e edição.
-- Calendário: missões organizadas por data.
-- Recorrentes: missões diárias, semanais e mensais, com registros de constância.
-
-A seção separada Hábitos foi removida. Os hábitos já cadastrados viram missões diárias, com os dias marcados anteriormente preservados. Eles passam a dar XP e moedas nas novas conclusões; os registros antigos não geram recompensas retroativas. Se um hábito já foi marcado hoje, sua próxima missão será amanhã.
-
-Concluir uma missão recorrente cria a próxima data futura. Dias perdidos não se transformam em uma pilha de ocorrências atrasadas. Ocorrências futuras não podem ser concluídas antes da data. Uma missão pontual pode ser feita antecipadamente.
-
-### Funcionalidades novas
-
-- Captura rápida: anote título, data e categoria e ajuste os detalhes depois.
-- Modelos editáveis de estudo, leitura, atividade física e revisão financeira. Nenhuma tarefa é criada até você salvar.
-- Próximo passo escolhido manualmente.
-- Pomodoro vinculado à missão, com tarefa e duração registradas no início da sessão.
-- Ao terminar o foco, você pode concluir a missão; ela não é concluída automaticamente.
-- Aviso de foco em andamento/pausado nas outras telas.
-- Contas vencidas ou com vencimento nos próximos sete dias, dentro do mês financeiro selecionado.
-- Cópia do orçamento do mês anterior, com confirmação antes de substituir limites existentes.
-
-## Como atualizar
-
-1. Exporte um backup no perfil.
-2. Extraia este ZIP.
-3. Envie os seis arquivos extraídos para a raiz do mesmo repositório GitHub, substituindo os anteriores.
-4. Aguarde o GitHub Pages publicar. Abra o app e use Atualizar se aparecer o aviso de nova versão. Feche e reabra se necessário.
-
-Não limpe os dados do site: tarefas, finanças e preferências continuam na chave local nekoquest_v4. A migração dos hábitos é feita uma única vez e também funciona ao restaurar backups anteriores.
-
-O index.html contém os gatos, cenários, estilos e código. A interface não depende da pasta assets. Os arquivos adicionais mantêm a instalação e o funcionamento offline.
-
-## Dados e funcionamento
-
-Os dados ficam neste navegador, sem sincronização automática ou integração bancária. O backup JSON inclui tarefas e finanças. O timer recupera o tempo ao voltar ao app, mas não garante alarmes com o navegador fechado ou suspenso.
-
-Moedas de missão são virtuais. Reabrir uma missão reverte XP e moedas, podendo deixar o saldo virtual negativo se as moedas já foram gastas. Excluir uma missão concluída preserva suas conquistas registradas.
-
-Nas finanças, o saldo acumulado considera apenas lançamentos efetivados até o mês selecionado. Contas pendentes ficam separadas. Orçamentos consideram despesas pagas e pendentes. Metas de economia não alteram o saldo. Valores são armazenados em centavos inteiros.
-
-A confirmação de pagamento usa a data do lançamento. É possível editá-la antes de confirmar.
+Notificações locais dependem da permissão do navegador e funcionam com o aplicativo aberto. Ao voltar ao aplicativo, ele pode exibir lembretes pendentes do dia. Para alertas em segundo plano, exporte o arquivo .ics, importe no calendário do celular e confira se os alarmes estão habilitados. Exportações repetidas podem duplicar eventos; mudanças e exclusões no NekoQuest não alteram eventos já importados. A exportação contém os lembretes ativos, não as tarefas.
 
 ## Verificação
-
-Passaram 90 verificações de lógica e geração de telas, incluindo: migração de hábitos sem duplicação, preservação do histórico, conclusão de recorrências, seleção da próxima missão, navegação unificada, foco vinculado à tarefa, finanças e imagens incorporadas. Sintaxe dos scripts e integridade do ZIP também foram verificadas. A interface ainda precisa de conferência visual em um navegador real após a publicação.
+Verificados automaticamente: inicialização, rotas e formulários, migração do estado anterior, backup do organizador, metas parciais, sequências, datas de recorrência, escape das notas, calendário .ics, XP e centavos das finanças. Sem validação visual em navegador real nesta execução; conferir no celular após atualizar, especialmente notificações e importação do calendário.
