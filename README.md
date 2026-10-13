@@ -1,55 +1,28 @@
-# NekoQuest 4.1 — Seu dia, no seu ritmo
+# NekoQuest 4.1.1 — Correção das imagens
 
-Aplicativo pensado para smartphones, com seis companheiros em pixel art e um gatinho dormindo no Pomodoro. Interface em português, sem dependências externas.
+Os gatos, os três cenários, os estilos e o código estão incorporados no próprio index.html. A interface não precisa mais buscar arquivos na pasta assets. O HTML também pode ser aberto sozinho para visualizar e usar o planner.
 
-## Atualizar no GitHub Pages
+## Atualizar o site
 
-1. No app antigo, entre no perfil e exporte um backup.
-2. Extraia este ZIP.
-3. Envie todos os arquivos extraídos e a pasta `assets` para a raiz do mesmo repositório. Substitua os arquivos antigos; não envie apenas o ZIP.
-4. Aguarde sua publicação concluir. Abra o mesmo endereço HTTPS e atualize a página. Feche e reabra o app se necessário.
-5. Não limpe os dados do navegador: isso apaga o progresso local.
+1. Extraia este ZIP.
+2. Envie todos os seis arquivos extraídos para a raiz do mesmo repositório, substituindo os arquivos de mesmo nome. Não envie somente o ZIP.
+3. Aguarde a publicação do GitHub Pages.
+4. Abra seu site e, se aparecer a faixa “Uma atualização está pronta”, toque em Atualizar. Caso ainda veja a versão antiga, feche e reabra o aplicativo. No computador, Ctrl+Shift+R força a atualização da página.
 
-O `index.html` depende de `style.css`, `core.js`, `app.js` e da pasta `assets`. Mantenha os arquivos juntos. Para testar localmente no computador, execute `python3 -m http.server 8000` nesta pasta e abra `http://localhost:8000`.
+Não é necessário limpar o armazenamento do site. As tarefas e finanças continuam na mesma chave local. Exporte um backup pelo perfil antes de alterar dados do navegador.
 
-## Refinamentos da versão 4.1
+## Arquivos
 
-- Tela inicial com resumo do dia, progresso, tempo de foco, atalhos e agenda da semana.
-- Gatos com acessórios próprios: estrela, café, plantinha, lenço, livro e chapéu. Refúgios de noite, fim de tarde e chuva.
-- Detalhes da missão com notas e subtarefas, horário opcional, duplicação e ação “Deixar para amanhã”.
-- Missões agrupadas em atrasadas, hoje, próximas e concluídas; filtro da semana e prioridade corrigida.
-- Tela Meu progresso com atividade semanal, foco e conquistas.
-- Finanças com busca, filtros, despesas por categoria, valores ocultáveis e confirmação de pagamento/recebimento.
-- Contraste de texto ajustado às cores escolhidas, formulários agrupados corretamente e opção de reduzir animações.
-- Correção de contagem de missões reabertas e da recorrência mensal de datas como dia 31.
-- Aviso de atualização quando uma nova versão já estiver carregada.
+- index.html: aplicativo completo, com imagens incorporadas.
+- service-worker.js: atualização de cache e funcionamento offline.
+- manifest.json: informações de instalação.
+- cat-192.png e cat-512.png: ícones do app instalado.
+- README.md: estas instruções.
 
-Continuam disponíveis: hábitos, calendário, Pomodoro, recompensas, orçamento mensal, metas, CSV e backup completo.
+Para instalar como aplicativo, mantenha os arquivos juntos em um endereço HTTPS. O navegador precisa abrir o site online uma vez para preparar o modo offline.
 
-## Como os valores funcionam
+Todos os recursos da versão 4.1 foram preservados: tarefas, subtarefas, hábitos, calendário, Pomodoro, recompensas, finanças, metas, perfil e backup. Os dados ficam salvos no navegador, sem sincronização entre dispositivos.
 
-Moedas de missão são virtuais, sem vínculo com as finanças. Concluir uma missão concede XP e moedas. Reabrir reverte esses valores; se você já gastou as moedas, o saldo virtual pode ficar negativo. Excluir uma missão concluída preserva as conquistas já registradas.
+## Verificação
 
-Todos os valores financeiros são armazenados em centavos inteiros. Você pode digitar `125,90` ou `1.250,90`.
-
-Na confirmação rápida de pagamento/recebimento, o lançamento conserva a data cadastrada. A janela permite editar essa data antes de confirmar.
-
-O saldo acumulado usa o saldo inicial mais as receitas efetivadas, menos as despesas efetivadas, até o fim do mês escolhido. Contas pendentes aparecem separadamente. O saldo inicial é o valor disponível antes do primeiro lançamento cadastrado.
-
-O orçamento considera todas as despesas do mês, pagas e pendentes. Metas de economia são um acompanhamento separado: atualizar o valor guardado não cria lançamentos nem altera o saldo.
-
-## Dados e migração
-
-A atualização mantém a chave `nekoquest_v4` e migra as novas preferências automaticamente. A versão também reconhece os dados `nekoquest_v3` e o formato original `neko_tasks_v1` na mesma origem/navegador. Ela salva o novo progresso em `nekoquest_v4` e preserva os registros antigos. Você também pode restaurar o JSON da versão anterior pelo perfil. Se sua versão usa outro formato, ela pode não migrar automaticamente.
-
-Exporte um backup periodicamente. Ele inclui os seus dados financeiros: guarde-o com cuidado. Não há conexão bancária, conta online ou sincronização entre aparelhos.
-
-## Instalação e offline
-
-No endereço HTTPS publicado, use “Instalar app” no navegador Android. No iPhone, use Compartilhar → Adicionar à Tela de Início. Os arquivos para instalação e funcionamento offline estão incluídos; o navegador precisa carregar o app online uma vez.
-
-O Pomodoro recupera o tempo ao voltar ao aplicativo. Ele não garante um alarme quando o navegador estiver suspenso ou fechado. Apenas uma sessão é registrada ao retornar, sem criar sessões sucessivas automaticamente.
-
-## Verificação desta versão
-
-Sintaxe JavaScript e 70 verificações automatizadas de lógica passaram, incluindo os novos fluxos, valores ocultos, recorrências mensais, contagem sem duplicatas, finanças, migração e geração das telas. Os rótulos e agrupamentos dos seis formulários foram conferidos. Os SVGs e ícones foram inspecionados. Não foi possível executar um navegador gráfico neste ambiente; confira o layout e a instalação no aparelho depois da publicação.
+Passaram os 70 testes de regressão de lógica e as verificações específicas dos sete gatos incorporados, três cenários, ausência de solicitações a assets, instalação do cache sem arquivos opcionais e recuperação do HTML offline. O site publicado não foi inspecionado, pois o endereço não foi fornecido.
