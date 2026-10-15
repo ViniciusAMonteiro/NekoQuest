@@ -1,4 +1,4 @@
-# NekoQuest 4.3.2 — tarefas, rotinas e diário
+# NekoQuest 4.3.4 — tarefas, rotinas e diário
 
 Substitua os seis arquivos do aplicativo no mesmo local do seu site: index.html, service-worker.js, manifest.json, cat-192.png, cat-512.png e README.md. Mantenha a mesma origem/endereço para preservar o armazenamento do navegador. Faça um backup em Perfil antes de atualizar. Reabra e use Atualizar caso apareça o aviso.
 
@@ -34,3 +34,17 @@ Finanças tem duas novas visualizações: Relatórios e Calendário. Os relatór
 Exportações: CSV compatível com Excel (não XLSX nativo); HTML independente, sem scripts; PDF pela opção Imprimir do navegador ao abrir o HTML. As exportações são legíveis e incluem valores completos mediante confirmação. Calendário .ics exporta somente pendências filtradas, às 9h no horário local, com alerta. Eventos exportados não são sincronizados: alterações no aplicativo não atualizam o calendário; reimportar pode duplicar eventos.
 
 Calendário financeiro mostra datas já cadastradas, sem gerar previsões automaticamente. O esquema e os backups existentes foram preservados. Esta versão não implementa transferências entre contas, cartões, pagamento parcial de faturas, investimentos, perfis, tags, subcategorias, multicategorias, anexos, importação OFX/CSV ou proteção por senha/biometria. Estes itens permanecem planejados, não são recursos ativos. Testes de lógica e renderização simulada passaram; não foi realizada inspeção visual em navegador real nesta execução.
+
+
+## Correção mobile — 4.3.3
+As seis seções financeiras agora ficam em duas linhas de três botões, evitando o alargamento da página. Cartões, colunas e valores longos respeitam a largura disponível. Não houve mudança no formato dos dados, cálculos ou recursos. O service worker foi versionado para distribuir o layout corrigido. Após substituir os arquivos na mesma hospedagem, reabra o aplicativo e toque em Atualizar caso solicitado. Não apague os dados do site. Testes de lógica e estrutura passaram; o ambiente não possui navegador instalado para validação visual real.
+
+
+## Refinamento — 4.3.4
+- Atalhos separados para receita e despesa no resumo financeiro.
+- Painel de despesas vencidas e dos próximos sete dias, incluindo meses anteriores. Não depende do mês selecionado e informa isso na tela.
+- Filtros de vencidos e efetivados, contagem dos resultados e opção de limpar busca/filtros.
+- Pesquisa por descrição ou categoria sem exigir acentos.
+- Atalhos de relatório: hoje, últimos 30 dias e todo o histórico. Preservam os demais filtros.
+- Retorno ao mês atual; textos e botões financeiros mais legíveis; foco visível ao usar teclado; respeito à preferência do dispositivo por movimento reduzido.
+O armazenamento, os dados financeiros e as outras funcionalidades mantêm o mesmo formato. Testes de regressão e casos novos passaram. Não houve inspeção visual em navegador real nesta execução. Faça backup antes de substituir os seis arquivos na mesma hospedagem; reabra e use Atualizar quando oferecido, sem limpar dados do site.
