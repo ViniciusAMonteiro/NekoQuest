@@ -1,4 +1,4 @@
-# NekoQuest 4.3.4 — tarefas, rotinas e diário
+# NekoQuest 4.5.0 — tarefas, rotinas e diário
 
 Substitua os seis arquivos do aplicativo no mesmo local do seu site: index.html, service-worker.js, manifest.json, cat-192.png, cat-512.png e README.md. Mantenha a mesma origem/endereço para preservar o armazenamento do navegador. Faça um backup em Perfil antes de atualizar. Reabra e use Atualizar caso apareça o aviso.
 
@@ -48,3 +48,29 @@ As seis seções financeiras agora ficam em duas linhas de três botões, evitan
 - Atalhos de relatório: hoje, últimos 30 dias e todo o histórico. Preservam os demais filtros.
 - Retorno ao mês atual; textos e botões financeiros mais legíveis; foco visível ao usar teclado; respeito à preferência do dispositivo por movimento reduzido.
 O armazenamento, os dados financeiros e as outras funcionalidades mantêm o mesmo formato. Testes de regressão e casos novos passaram. Não houve inspeção visual em navegador real nesta execução. Faça backup antes de substituir os seis arquivos na mesma hospedagem; reabra e use Atualizar quando oferecido, sem limpar dados do site.
+
+
+## Respirar — 4.4.0
+Nova seção em Mais → Respirar, também com atalho no início. Mantém as cinco abas inferiores e os recursos anteriores.
+
+- Progresso: ponto de partida, média anterior de cigarros, preço e quantidade por maço, motivo pessoal e plano para gatilhos.
+- Contadores: tempo desde o último cigarro registrado (ou início), cigarros evitados estimados e economia bruta estimada. Desconta cigarros registrados após o início; não calcula custos de tratamentos, não altera Finanças e não concede moedas ou XP.
+- Diário: vontades (intensidade, gatilho, estratégia, se ajudou), cigarros, vape, reposição de nicotina e reflexões. Permite registros passados, edição, exclusão e filtros. Mostra os 100 registros mais recentes; o backup contém todos.
+- Botão Estou com vontade agora: pausa opcional de três minutos com estratégias simples; o tempo usa relógio real e não requer rede. A pausa não garante o desaparecimento da vontade.
+- Marcos de 1 a 365 dias baseados na sequência atual de cigarros; registrar um cigarro recalcula a sequência sem apagar o diário. Vape e reposição são registros separados e não significam abstinência de nicotina.
+- Registro de produtos por quantidade e unidade informadas. Não prescreve doses, equivalências, desmame ou troca de medicamentos; não recomenda vape como tratamento.
+- Dados locais dentro do backup geral existente. A opção de apagar Respirar remove apenas o perfil e diário desta seção. Dados não são criptografados; compartilhe backups com cuidado.
+
+Orientações de apoio consultadas: INCA, Como parar de fumar (https://www.gov.br/inca/pt-br/assuntos/causas-e-prevencao-do-cancer/tabagismo/como-parar-de-fumar) e Ministério da Saúde, Sou Paciente — Tabagismo (https://linhasdecuidado.saude.gov.br/portal/tabagismo/sou-paciente/). O aplicativo não é afiliado ao Kwit e não afirma validação pela OMS, eficácia clínica própria ou aumento de chance de sucesso. Tratamento e ajustes de reposição devem ser discutidos com profissional de saúde. Consulte a UBS sobre tratamento pelo SUS.
+
+Verificação: regressões anteriores e testes novos de migração, backup, estimativas, cigarros registrados, separação de reposição, data futura, formulários e navegação passaram. Nenhuma validação visual em navegador real foi possível nesta execução. Faça backup e substitua os seis arquivos na mesma hospedagem, mantendo os dados do site.
+
+
+## Hidratação — 4.5.0
+Acesse no início ou em Mais → Hidratação. Inclui gatinho em recipiente que se preenche visualmente, meta manual, atalhos de 150/250/500 mL com desfazer, volume personalizado, data/hora passada, notas, edição e exclusão. Histórico de sete dias, navegação por data e sequência de dias com registros. Meta e desenho acompanham apenas água. Outras bebidas (chá, café, leite, suco e outra) são registradas em volume separado, sem coeficientes ou alegação de hidratação exata.
+
+Nenhuma meta é pré-ativada ou calculada por peso, clima ou idade. Alterar a meta vale desde o dia atual; metas anteriores permanecem na série histórica. Limites de formulário são técnicos, não recomendações de consumo. Não há prêmio por excesso de água, integração com Apple Health/Samsung Health, relógios ou sincronização na nuvem.
+
+Lembretes diários configurados pelo usuário usam a agenda existente, sem duplicar horários da própria seção. Podem ser pausados/excluídos em Hidratação e gerenciados na agenda geral. Dependem de app aberto e permissão de notificações; avisos de hidratação atrasados em mais de 15 minutos são ignorados. Exportação .ics somente dos horários ativos desta seção permite importação no calendário do celular; não existe sincronização e reimportar pode duplicar eventos. Escolha horários em que está acordado.
+
+Todos os registros entram no backup geral. Respirar e demais seções foram preservados. Testes passaram para volumes, separação das bebidas, metas por data, histórico, sequência, backup, entradas inválidas, lembretes duplicados e navegação. Não houve inspeção visual em navegador real nesta execução.
