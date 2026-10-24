@@ -1,7 +1,7 @@
-/* NekoQuest 5.3.0 — self-contained offline shell; storage is never cleared. */
+/* NekoQuest 5.4.0 — self-contained offline shell; storage is never cleared. */
 const PREFIX='nekoquest-'+encodeURIComponent(self.registration.scope)+'-';
-const CACHE=PREFIX+'v5.3.0';
-const ASSETS=['./','./index.html','./manifest.json','./cat-192.png','./cat-512.png', './art-hero.webp', './art-tasks.webp', './art-workouts.webp', './art-food.webp', './art-finance.webp', './art-breathe.webp', './art-hydration.webp'];
+const CACHE=PREFIX+'v5.4.0';
+const ASSETS=['./','./index.html','./manifest.json','./cat-192.png','./cat-512.png', './art-hero.webp', './art-tasks.webp', './art-workouts.webp', './art-food.webp', './art-finance.webp', './art-breathe.webp', './art-hydration.webp', './neko-icon.svg', './pixel-focus.svg', './pixel-journal.svg', './pixel-insights.svg', './pixel-history.svg', './pixel-cats.svg'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{
  const cache=await caches.open(CACHE);
  await cache.addAll(ASSETS.map(url=>new Request(url,{cache:'reload'})));
