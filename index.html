@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f8faf9"><meta name="apple-mobile-web-app-capable" content="yes"><title>NekoQuest · Sua rotina, no seu ritmo</title><link rel="manifest" href="manifest.json"><link rel="icon" href="neko-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="cat-192.png"><style>
-/* NekoQuest 5.4.0 — a single token system, four text sizes, one surface radius. */
+/* NekoQuest 5.5.0 — a single token system, four text sizes, one surface radius. */
 :root {
  color-scheme:dark;
  --bg:#111917; --panel:#19241f; --panel2:#24312a; --line:#61766a;
@@ -108,7 +108,81 @@ nav button{border-radius:14px}nav .active{color:#245f43;background:var(--panel2)
 .see-areas{margin-top:20px}.section-back{border:0;background:transparent;padding:6px 0;color:var(--accent);font-size:14px;min-height:38px}
 #app[data-page=home] .section{margin:18px 0 10px}
 @media(max-width:374px){main{padding-inline:14px}.home-grid,.area-grid{gap:9px}.area-caption{padding:9px}.area-caption b{font-size:13px}.hero-neko{height:210px}}
-:root{--font:"Trebuchet MS",system-ui,sans-serif}h1,h2,h3,.brand,.cat-choice b{font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:800;letter-spacing:-.025em}.icon{stroke-linejoin:miter;stroke-linecap:square;stroke-width:2;shape-rendering:crispEdges}nav button{font-weight:800;min-height:64px}nav button .icon{width:27px;height:27px}nav .active{color:var(--text)}.helper-links button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:100px;text-align:center;padding:9px}.helper-links .icon{display:none}.helper-art{width:55px;height:55px;image-rendering:pixelated}.helper-label{font-size:13px;font-weight:800;line-height:1.2}.profile-banner{padding:18px 8px;text-align:center;background:var(--panel2);border:1px solid var(--line);border-radius:24px;margin:12px 0 24px}.profile-banner .sprite{width:144px;height:144px}.profile-banner strong{display:block;font-weight:800;font-size:20px}.profile-banner small{display:block;color:var(--muted)}</style></head><body><div class="shell"><header id="header"></header><main id="app" tabindex="-1"></main><nav id="nav" aria-label="Navegação principal"></nav></div><dialog id="modal" aria-label="Editar informações"></dialog><div id="toast" role="status" hidden></div><script>
+:root{--font:"Trebuchet MS",system-ui,sans-serif}h1,h2,h3,.brand,.cat-choice b{font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:800;letter-spacing:-.025em}.icon{stroke-linejoin:miter;stroke-linecap:square;stroke-width:2;shape-rendering:crispEdges}nav button{font-weight:800;min-height:64px}nav button .icon{width:27px;height:27px}nav .active{color:var(--text)}.helper-links button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:100px;text-align:center;padding:9px}.helper-links .icon{display:none}.helper-art{width:55px;height:55px;image-rendering:pixelated}.helper-label{font-size:13px;font-weight:800;line-height:1.2}.profile-banner{padding:18px 8px;text-align:center;background:var(--panel2);border:1px solid var(--line);border-radius:24px;margin:12px 0 24px}.profile-banner .sprite{width:144px;height:144px}.profile-banner strong{display:block;font-weight:800;font-size:20px}.profile-banner small{display:block;color:var(--muted)}
+/* NekoQuest 5.5 — unified pastel pixel-art interface */
+:root{--font:"Trebuchet MS","Arial Rounded MT Bold",system-ui,sans-serif;--radius:19px}
+body.light{--bg:#f8fbf8;--panel:#ffffff;--panel2:#e9f3ed;--line:#dbe6de;--text:#142b27;--muted:#586f68}
+body:not(.light){--bg:#121c20;--panel:#203137;--panel2:#30484a;--line:#54706b}
+body{font-family:var(--font);font-size:15px}
+h1,h2,h3,.brand,.hero-overlay span{font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:900;letter-spacing:-.035em}
+h1{font-size:26px}h2{font-size:19px}
+main{padding-bottom:calc(115px + env(safe-area-inset-bottom))}
+.card,.stat{box-shadow:0 2px 15px rgba(28,63,50,.035);border-color:var(--line)}
+button{transition:background .18s, transform .18s,box-shadow .18s}
+button:active:not(:disabled){transform:scale(.985)}
+#header{background:var(--bg);border-bottom:0}
+.brand span{font-family:"Trebuchet MS",system-ui,sans-serif;font-weight:900;letter-spacing:-.05em}
+.pixel-cat{image-rendering:pixelated;filter:drop-shadow(1px 2px 0 rgba(20,31,26,.12))}
+.brand .pixel-cat{width:37px;height:37px}
+nav{background:color-mix(in srgb,var(--panel) 95%,transparent);border:1px solid var(--line);border-bottom:0;border-radius:24px 24px 0 0;box-shadow:0 -5px 24px rgba(15,47,40,.04)}
+nav button{color:var(--muted);border-radius:16px;font-size:12px;min-height:62px;font-weight:800}
+nav button.active{background:transparent;color:#236a54}
+body:not(.light) nav button.active{color:#b3e8c9}
+nav button .icon{width:23px;height:23px;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero-neko{border-radius:22px;overflow:hidden}
+.hero-overlay{background:linear-gradient(transparent,rgba(2,10,24,.66))}
+.area-grid,.home-grid{gap:10px}
+.area-tile{border-radius:17px;border:0;box-shadow:0 3px 9px rgba(42,56,47,.05);overflow:hidden}
+.area-tile img{display:block;width:100%;height:auto}
+.area-caption{background:var(--panel);color:var(--text);padding:9px 11px}
+.area-heading{margin:0 0 10px}
+.helper-panel{padding:14px;border:0;background:transparent}
+.helper-links button{min-height:104px;border:0;box-shadow:0 3px 12px rgba(45,69,59,.065);background:var(--panel);padding:10px 4px}
+.helper-links .helper-art{width:57px;height:57px}
+.helper-label{font-size:12px}
+.cats-grid{gap:10px}
+.cat-choice{overflow:hidden;border:1px solid var(--line);border-radius:16px;padding:0 0 12px;background:var(--panel);gap:3px;min-width:0}
+.cat-choice .sprite{width:100%;height:136px;margin:0;display:block;box-sizing:border-box;padding:10px 22% 0;background:linear-gradient(145deg,#ffe3c0,#f7f1da)}
+.cat-choice:nth-child(1) .sprite{background:linear-gradient(135deg,#b4a2f5,#e5d6ff)}
+.cat-choice:nth-child(2) .sprite{background:linear-gradient(135deg,#ffe4b9,#fff5dc)}
+.cat-choice:nth-child(3) .sprite{background:linear-gradient(135deg,#ffbe76,#fff0bf)}
+.cat-choice:nth-child(4) .sprite{background:linear-gradient(135deg,#89cfea,#d5efff)}
+.cat-choice:nth-child(5) .sprite{background:linear-gradient(135deg,#ccb0f2,#f1e1fa)}
+.cat-choice:nth-child(6) .sprite{background:linear-gradient(135deg,#89dfb7,#d5ffef)}
+.cat-choice b{margin-top:5px;font-size:17px}
+.cat-choice small{font-size:12px;color:var(--muted)}
+.cat-choice.selected{outline:2px solid #2a8b6c;outline-offset:-2px}
+.profile-banner{background:linear-gradient(135deg,#d7f0e3,#eef8ed);border:0;color:#20392f;border-radius:19px}
+.profile-banner .pixel-cat{height:145px;width:145px;filter:drop-shadow(0 5px 0 rgba(25,54,41,.09))}
+body:not(.light) .profile-banner{background:linear-gradient(135deg,#244b45,#345d53);color:white}
+.tabs{border-radius:16px;overflow-x:auto}
+.tabs button.selected,.chips button.selected{background:#247e61;color:white}
+.primary{background:#258260;border-color:#258260;color:#fff}
+.primary:hover:not(:disabled){background:#207251}
+progress{accent-color:#3f9c7a}
+#app[data-page="tasks"]{--section-tint:#ffe4bb}
+#app[data-page="workouts"]{--section-tint:#ffd3ce}
+#app[data-page="food"]{--section-tint:#ffe2b5}
+#app[data-page="finance"]{--section-tint:#c5f1d9}
+#app[data-page="breathe"]{--section-tint:#e4cefc}
+#app[data-page="hydration"]{--section-tint:#c5eafb}
+#app[data-page="focus"]{--section-tint:#ddcdf9}
+#app[data-page="journal"]{--section-tint:#ffe4bf}
+#app[data-page="insights"]{--section-tint:#c7ecd8}
+#app[data-page="history"]{--section-tint:#cbe4ff}
+#app[data-page="cats"]{--section-tint:#e9dbfc}
+#app[data-page="profile"]{--section-tint:#d9eee1}
+.page-visual{position:relative;background:var(--section-tint,#def2e6);border-radius:21px;overflow:hidden;min-height:137px;display:flex;flex-direction:column;justify-content:center;padding:15px 47% 15px 17px;margin-bottom:15px;color:#152c29}
+.page-visual .page-art{position:absolute;right:0;top:0;height:100%;width:53%;object-fit:cover;object-position:center;image-rendering:pixelated;mask-image:linear-gradient(to right,transparent,#000 28%)}
+.page-visual h1{margin:0 0 7px;font-size:24px;line-height:1.05}
+.page-visual p{font-size:12px;line-height:1.35;margin:0;color:#394b49}
+body:not(.light) .page-visual{color:#152c29}
+.cat-expressions .pixel-cat{width:55px;height:64px}
+.refuge-preview .pixel-cat{width:105px;height:110px}
+.timer .pixel-cat{width:108px;height:120px}
+@media(max-width:390px){.page-visual{min-height:120px}.page-visual h1{font-size:22px}.cat-choice .sprite{height:112px}}
+@media(prefers-reduced-motion:reduce){.pixel-cat{animation:none!important}}
+</style></head><body><div class="shell"><header id="header"></header><main id="app" tabindex="-1"></main><nav id="nav" aria-label="Navegação principal"></nav></div><dialog id="modal" aria-label="Editar informações"></dialog><div id="toast" role="status" hidden></div><script>
 
 /* NekoQuest v4: deterministic data rules; amounts are integer centavos. */
 const Core=(()=>{
@@ -287,18 +361,18 @@ const cats={luna:['Luna','Sonhadora'],mochi:['Mochi','Companheiro'],mikan:['Mika
 function cat(name=state.cat,cl='',mood='normal'){
  if(name==='sleep'){name=state.cat;mood='sleeping'}
  const key=Object.hasOwn(cats,name)?name:'luna';
- const detail={
-  luna:'<path d="M48 30a7 7 0 0 0 8 8 7 7 0 1 1-8-8"/>',
-  mochi:'<ellipse cx="50" cy="34" rx="6" ry="4"/>',
-  mikan:'<path d="m45 28 5 9 5-9z"/>',
-  nori:'<path d="M39 76q11-10 22 0-11 10-22 0"/>',
-  yuki:'<path d="m50 27 2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>',
-  sora:'<path d="M43 33q7-10 14 0t-14 0"/>'
- }[key];
- const eyes=mood==='sleeping'?'<path d="m33 48 7 2m20 0 7-2"/>':
- ['happy','celebrating'].includes(mood)?'<path d="M33 50q4-7 8 0m18 0q4-7 8 0"/>':'<circle cx="37" cy="49" r="2"/><circle cx="63" cy="49" r="2"/>';
- const labels={normal:'tranquilo',happy:'feliz',sleeping:'dormindo',celebrating:'comemorando'};
- return `<svg class="sprite ${esc(cl)} cat-${key} mood-${mood}" viewBox="0 0 100 100" role="img" aria-label="${cats[key][0]} ${labels[mood]||labels.normal}" focusable="false"><g fill="var(--cat-fill)" stroke="var(--cat-stroke)" stroke-width="2.5" stroke-linejoin="round"><path d="M23 36 23 17q0-5 5-2l17 13h10l17-13q5-3 5 2v19q9 7 9 21 0 23-36 23T14 57q0-14 9-21z"/></g><g fill="var(--cat-detail)" stroke="none">${detail}</g><g stroke="var(--cat-stroke)" stroke-width="2.5" stroke-linecap="round" fill="${mood==='normal'?'var(--cat-stroke)':'none'}">${eyes}</g><circle fill="var(--cat-stroke)" cx="50" cy="57" r="2"/>${['happy','celebrating'].includes(mood)?'<path d="M45 63q5 6 10 0" fill="none" stroke="var(--cat-stroke)" stroke-width="2" stroke-linecap="round"/>':''}${mood==='celebrating'?'<g fill="none" stroke="var(--cat-detail)" stroke-width="2.5" stroke-linecap="round"><path d="m7 22-3-5m7 15H4m85-10 3-5m-7 15h7M45 9h10m-5-5v10"/></g>':''}</svg>`;
+ const palettes={luna:['#51444b','#fff3e8','#d8a4ab'],mochi:['#f6eee6','#fff9f3','#bba6a0'],mikan:['#e6a15b','#fff0cf','#c87644'],nori:['#525264','#f8eee6','#dd9a88'],yuki:['#f5f4ed','#ffffff','#cfc9d0'],sora:['#67626a','#f6e9db','#b9aab1']};
+ const [fur,cream,ear]=palettes[key];
+ const rect=(x,y,w,h,fill)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'"/>';
+ const ink='#302a34', pink='#e98e91';
+ const frame='<path d="M7 38V20h4v-4h4v4h4v4h4v-4h4v-4h4v4h4v18h4v13h-4v4H7v-4H3V38Z" fill="'+ink+'"/>';
+ const ears=rect(9,21,7,13,fur)+rect(28,21,7,13,fur)+rect(12,24,3,8,ear)+rect(29,24,3,8,ear);
+ const base=rect(7,36,29,15,fur)+rect(11,40,21,11,cream)+rect(15,36,13,5,cream);
+ const eyes=mood==='sleeping'?rect(12,41,6,2,ink)+rect(27,41,6,2,ink):mood==='happy'||mood==='celebrating'?rect(12,40,3,2,ink)+rect(15,38,2,2,ink)+rect(27,38,2,2,ink)+rect(29,40,3,2,ink):rect(14,39,3,4,ink)+rect(27,39,3,4,ink);
+ const cheeks=rect(9,45,4,2,pink)+rect(30,45,4,2,pink),face=rect(20,44,3,2,pink)+rect(19,47,2,2,ink)+rect(23,47,2,2,ink);
+ const props={luna:rect(31,12,4,4,'#ffe3a1')+rect(34,16,3,3,'#ffe3a1'),mochi:rect(20,19,5,4,'#7fb8cf'),mikan:rect(18,19,8,3,'#b8683b'),nori:rect(10,15,23,5,'#e57a62')+rect(17,11,10,5,'#db6959'),yuki:rect(18,17,7,4,'#8bb4dc'),sora:rect(16,16,14,4,'#ce5b7e')+rect(20,12,7,5,'#ce5b7e')}[key];
+ const extra=mood==='celebrating'?rect(2,18,3,3,'#f4bb6e')+rect(37,27,3,3,'#94cba6'):'';
+ return '<svg class="sprite pixel-cat '+esc(cl)+' cat-'+key+' mood-'+mood+'" viewBox="0 0 42 62" shape-rendering="crispEdges" role="img" aria-label="'+cats[key][0]+'" focusable="false">'+frame+ears+base+eyes+cheeks+face+props+extra+'</svg>';
 }
 
 const categories=['Alimentação','Moradia','Transporte','Saúde','Estudos','Lazer','Compras','Outros'];
@@ -349,7 +423,7 @@ function history(){let items=[...state.history,...state.sessions.map(s=>({...s,t
 
 
 
-function profile(){return head('SEUS GOSTOS, SEU ESTILO','Meu perfil')+`<div class="profile-banner">${cat(state.cat,'bigcat','happy')}<strong>${esc(state.name)}</strong><small>Seu companheiro de jornada</small></div><form data-form="profile">${formField('Como quer ser chamado?','name',state.name,'text','required maxlength="40"')}${selectField('Tema','theme',[['dark','Noite · escuro'],['light','Dia · claro']],state.theme)}<label>Cor principal</label><div class="palette">${['#91c4a8','#9485d6','#e99f82','#8fbde8','#efc579'].map(c=>`<button type="button" data-action="color" data-value="${c}" class="${state.color===c?'selected':''}" style="background:${c}" aria-label="Cor ${c}"></button>`).join('')}</div>${formField('Ou escolha sua cor','color',state.color,'color')}<label class="checklabel"><input type="checkbox" name="motion" ${state.preferences.motion?'checked':''}> Animações suaves</label><button class="primary wide">Salvar perfil</button></form><div class="section"><h2>Seus dados</h2></div>${btn('backup',icon('download')+' Exportar backup completo','wide')}<label for="import">Restaurar backup JSON</label><input id="import" type="file" accept="application/json,.json">${btn('install','Instalar NekoQuest','wide')}<p class="footnote">Seus dados ficam neste navegador. O backup inclui todas as áreas, treinos e sessões em andamento. Não há conexão com banco ou sincronização automática.</p><p class="footnote">NekoQuest 5.4.0</p>`+modernSettings()}
+function profile(){return head('SEUS GOSTOS, SEU ESTILO','Meu perfil')+`<div class="profile-banner">${cat(state.cat,'bigcat','happy')}<strong>${esc(state.name)}</strong><small>Seu companheiro de jornada</small></div><form data-form="profile">${formField('Como quer ser chamado?','name',state.name,'text','required maxlength="40"')}${selectField('Tema','theme',[['dark','Noite · escuro'],['light','Dia · claro']],state.theme)}<label>Cor principal</label><div class="palette">${['#91c4a8','#9485d6','#e99f82','#8fbde8','#efc579'].map(c=>`<button type="button" data-action="color" data-value="${c}" class="${state.color===c?'selected':''}" style="background:${c}" aria-label="Cor ${c}"></button>`).join('')}</div>${formField('Ou escolha sua cor','color',state.color,'color')}<label class="checklabel"><input type="checkbox" name="motion" ${state.preferences.motion?'checked':''}> Animações suaves</label><button class="primary wide">Salvar perfil</button></form><div class="section"><h2>Seus dados</h2></div>${btn('backup',icon('download')+' Exportar backup completo','wide')}<label for="import">Restaurar backup JSON</label><input id="import" type="file" accept="application/json,.json">${btn('install','Instalar NekoQuest','wide')}<p class="footnote">Seus dados ficam neste navegador. O backup inclui todas as áreas, treinos e sessões em andamento. Não há conexão com banco ou sincronização automática.</p><p class="footnote">NekoQuest 5.5.0</p>`+modernSettings()}
 function taskForm(id,preset={}){let t=state.tasks.find(t=>t.id===id)||{title:'',date:page==='tasks'&&missionView==='calendar'?day:Core.today(),category:'Estudos',priority:'normal',minutes:25,xp:10,repeat:page==='tasks'&&missionView==='routines'?'daily':'none',notes:'',subtasks:[],...preset};modal(id?'Editar tarefa':'Nova tarefa',`<form data-form="task" data-id="${esc(id||'')}">${selectField('Lista','listId',[['','Sem lista'],...org().lists.map(l=>[l.id,l.title])],t.listId||'')}${formField('O que você quer fazer?','title',t.title,'text','required maxlength="100"')}${selectField('Categoria','category',['Estudos','Trabalho','Saúde','Pessoal'],t.category)}<div class="grid form-grid">${formField('Data','date',t.date,'date','required')}${selectField('Prioridade','priority',[['normal','Normal'],['high','Alta'],['low','Baixa']],t.priority)}</div><div class="grid">${formField('Duração (min)','minutes',t.minutes,'number','min="1" max="600" required')}${formField('XP / moedas','xp',t.xp,'number',`min="1" max="10000" required ${t.done?'readonly':''}`)}</div>${formField('Horário (opcional)','time',t.time||'','time')}${selectField('Recorrência','repeat',[['none','Uma vez — tarefa pontual'],['daily','Todo dia — rotina / hábito'],['weekly','Semanalmente'],['monthly','Mensalmente'],['yearly','Anualmente']],t.repeat)}<p class="footnote">Concluir uma recorrente cria a próxima ocorrência. Todas as tarefas dão XP e moedas.</p><label for="f-notes">Notas</label><textarea id="f-notes" name="notes" maxlength="2000">${esc(t.notes)}</textarea><label for="f-subtasks">Subtarefas · uma por linha</label><textarea id="f-subtasks" name="subtasks" maxlength="3000" placeholder="Separar material&#10;Revisar o conteúdo">${esc(t.subtasks.map(s=>s.title).join('\n'))}</textarea>${t.subtasks.length?'<div class="checklist">'+t.subtasks.map((s,i)=>`<div class="subtask"><button type="button" data-action="subtask" data-id="${esc(id)}" data-index="${i}" aria-label="Alternar subtarefa">${icon(s.done?'check':'box')}</button><span>${esc(s.title)}</span></div>`).join('')+'</div>':''}<button class="primary wide">Salvar tarefa</button>${id?`<button type="button" class="wide danger" data-action="delete-task" data-id="${esc(id)}">Excluir tarefa</button>`:''}</form>`)}
 function rewardForm(id){let r=state.rewards.find(r=>r.id===id)||{title:'',cost:25,cat:'mochi'};modal(id?'Editar recompensa':'Nova recompensa',`<form data-form="reward" data-id="${esc(id||'')}">${formField('Sua pausa merecida','title',r.title,'text','required maxlength="100"')}${formField('Custo em moedas de tarefa','cost',r.cost,'number','required min="1" max="10000"')}${selectField('Gatinho','cat',Object.entries(cats).map(([k,v])=>[k,v[0]]),r.cat)}<button class="primary wide">Salvar recompensa</button>${id?`<button type="button" class="wide danger" data-action="delete-reward" data-id="${esc(id)}">Excluir recompensa</button>`:''}</form>`)}
 
@@ -627,16 +701,18 @@ function home(){const today=Core.today(),done=Core.completions(state).filter(h=>
  <button class="wide see-areas" data-page="areas">Explorar todas as áreas ${icon('arrow')}</button>`;
 }
 function more(){return areas()}
+const PAGE_VISUALS={tasks:['Tarefas','Organize suas tarefas e mantenha o foco.','tasks'],workouts:['Treinos','Acompanhe seus treinos e evolua sempre.','workouts'],food:['Refeições','Cuide das refeições e dos bons hábitos.','food'],finance:['Finanças','Acompanhe seus gastos e metas.','finance'],breathe:['Parar de Fumar','Pequenas escolhas, grandes conquistas.','breathe'],hydration:['Hidratação','Beba água e cuide da sua saúde.','hydration'],focus:['Foco e Pomodoro','Uma coisa de cada vez.','hero'],journal:['Diário','Registre seus pensamentos e conquistas.','food'],insights:['Progresso','Veja o que você conquistou.','finance'],history:['Histórico','Sua jornada contada em pequenos passos.','tasks']};
+function pageVisual(p){const info=PAGE_VISUALS[p];return info?'<section class="page-visual"><div><h1>'+info[0]+'</h1><p>'+info[1]+'</p></div><img class="page-art" src="art-'+info[2]+'.webp" alt="" loading="lazy"></section>':''}
 function render(){
  document.body.classList.toggle('light',state.theme==='light');document.body.classList.toggle('still',!state.preferences.motion);
  const root=document.documentElement.style;
  const accent=contrastAccent(state.color,state.theme);root.setProperty('--accent',accent);root.setProperty('--accent-text',accent);root.setProperty('--ink',state.theme==='light'?'#ffffff':'#101916');
  document.querySelector('meta[name=theme-color]').content=state.theme==='light'?'#f8faf9':'#111917';
- $('#header').innerHTML=`<div class="brand">${cat(state.cat,'smallcat')}<span>NekoQuest</span></div><button class="icon-btn quiet" data-page="profile" aria-label="Abrir perfil">${icon('user')}</button>`;
+ $('#header').innerHTML=`<div class="brand">${cat(state.cat,'smallcat','happy')}<span>NekoQuest</span></div><button class="icon-btn quiet" data-page="profile" aria-label="Abrir perfil">${icon('user')}</button>`;
  $('#nav').innerHTML=PRIMARY_NAV.map(([p,i,n])=>`<button data-page="${p}" class="${page===p?'active':''}" ${page===p?'aria-current="page"':''}>${icon(i)}<span>${n}</span></button>`).join('');
  $('#app').dataset.page=page;
  const view={home,areas,tasks,focus,workouts:workoutPage,finance:finances,history,cats:collection,more,profile,insights,journal,breathe,hydration,food}[page]||home;
- $('#app').innerHTML=(page!=='home'&&page!=='areas'&&page!=='profile'?`<button class="section-back" data-page="areas">${icon('back')} Áreas</button>`:'')+(appUpdate?'<div class="update-banner"><span>NekoQuest 5.4.0 disponível.</span><button data-action="update-app">Atualizar</button></div>':'')+view()+focusDock()+(['tasks'].includes(page)?`<button class="fab primary" data-action="task" aria-label="Nova tarefa">${icon('plus')}</button>`:'');
+ $('#app').innerHTML=(page!=='home'&&page!=='areas'&&page!=='profile'?`<button class="section-back" data-page="areas">${icon('back')} Áreas</button>`:'')+(appUpdate?'<div class="update-banner"><span>NekoQuest 5.5.0 disponível.</span><button data-action="update-app">Atualizar</button></div>':'')+pageVisual(page)+view()+focusDock()+(['tasks'].includes(page)?`<button class="fab primary" data-action="task" aria-label="Nova tarefa">${icon('plus')}</button>`:'');
  tick();paintWorkoutClock();
 }
 /** Use a single accent against all surfaces, with AA text and control contrast. */
