@@ -26,12 +26,12 @@ Progresso utiliza `assets/progresso.svg`; Histórico mantém seu SVG.
 
 Cada um dos seis personagens recebeu uma arte PNG distinta proveniente do kit do usuário:
 
-- **Luna:** `gato-dormindo.png`
-- **Mochi:** `gato-feliz.png`
-- **Mikan:** `gato-animado.png`
-- **Nori:** `gato-determinado.png`
-- **Yuki:** `gato-normal.png`
-- **Sora:** `gato-estudando.png`
+- **Luna:** `assets/companheiros/luna.png` (derivado de `gato-dormindo.png`)
+- **Mochi:** `assets/companheiros/mochi.png` (derivado de `gato-feliz.png`)
+- **Mikan:** `assets/companheiros/mikan.png` (derivado de `gato-animado.png`)
+- **Nori:** `assets/companheiros/nori.png` (derivado de `gato-determinado.png`)
+- **Yuki:** `assets/companheiros/yuki.png` (derivado de `gato-normal.png`)
+- **Sora:** `assets/companheiros/sora.png` (derivado de `gato-estudando.png`)
 
 A seleção de um companheiro afeta a visualização do card na área **Meus companheiros**, a imagem do banner de **Início**, o card de acesso em **Áreas** e o atalho em **Perfil**. A seleção fica salva na mesma estrutura de dados local.
 
