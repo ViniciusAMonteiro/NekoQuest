@@ -306,6 +306,30 @@ body:not(.light) .profile-banner{color:#172f2a}
 #app[data-page=home] .area-tile.painted-art .area-caption small{color:var(--text)!important;font-size:11px!important;font-weight:700}
 #app .page-visual--illustrated .page-art{top:0;right:0;width:49%;height:140%!important;object-fit:cover!important;object-position:center top!important;image-rendering:auto!important;mask-image:linear-gradient(to right,transparent 0%,black 19%)}
 @media(max-width:370px){#app .area-tile.painted-art>img{border-radius:13px!important}#app .page-visual--illustrated .page-art{width:48%}}
+
+/* NekoQuest 5.9.2 — companheiros reais do kit PNG e cards responsivos. */
+#app[data-page=home] .hero-neko>.hero-companion{
+  right:5%;bottom:1px;width:34%;height:88%;max-width:165px;
+  object-fit:contain!important;object-position:center bottom!important;
+  image-rendering:auto!important;border-radius:0!important;
+  filter:drop-shadow(0 3px 1px rgba(20,33,30,.20));
+}
+#app[data-page=areas] .area-cats img,
+#app[data-page=home] .area-cats img{box-sizing:border-box;padding:12px 18px 0;object-fit:contain!important;object-position:center bottom;background:#e9d9fc;}
+#app[data-page=cats] .cat-choice .cat-portrait{
+ display:flex;justify-content:center;align-items:flex-end;overflow:hidden;
+}
+#app[data-page=cats] .cat-choice .cat-portrait img{
+ box-sizing:border-box;max-width:100%;width:100%;height:100%!important;
+ object-fit:contain!important;object-position:center bottom!important;
+ image-rendering:auto!important;padding:7px 8px 0!important;
+ filter:drop-shadow(0 4px 1px rgba(29,44,46,.12));
+}
+.profile-quick button img{box-sizing:border-box;object-fit:contain;background:#e9d9fc;padding:3px;}
+@media(max-width:370px){
+ #app[data-page=home] .hero-neko>.hero-companion{right:2%;width:34%;height:83%}
+ #app[data-page=cats] .cat-choice .cat-portrait img{padding:4px 5px 0!important}
+}
 </style></head><body><div class="shell"><header id="header"></header><main id="app" tabindex="-1"></main><nav id="nav" aria-label="Navegação principal"></nav></div><dialog id="modal" aria-label="Editar informações"></dialog><div id="toast" role="status" hidden></div><script>
 
 /* NekoQuest v4: deterministic data rules; amounts are integer centavos. */
@@ -507,7 +531,7 @@ function toast(text){$('#toast').textContent=text;$('#toast').hidden=false;clear
 const btn=(action,label,cl='')=>`<button class="${cl}" data-action="${action}">${label}</button>`;
 const empty=(title,desc,skin='mochi')=>`<div class="empty">${cat(skin)}<h3>${title}</h3><p>${desc}</p></div>`;
 const head=(k,title,desc='')=>`<div class="eyebrow">${k}</div><h1>${title}</h1>${desc?`<p class="muted">${desc}</p>`:''}`;
-function go(p){if(p==='calendar'){p='tasks';missionView='calendar'}if(p==='habits'){p='tasks';missionView='routines'}page=p;render();window.scrollTo({top:0,behavior:'instant'});$('#app').focus({preventScroll:true})}
+function go(p){if(p==='breathe')p='areas';if(p==='calendar'){p='tasks';missionView='calendar'}if(p==='habits'){p='tasks';missionView='routines'}page=p;render();window.scrollTo({top:0,behavior:'instant'});$('#app').focus({preventScroll:true})}
 function modal(title,body){$('#modal').innerHTML=`<div class="row"><h2>${title}</h2><button class="quiet icon-btn" data-action="close" aria-label="Fechar">${icon('close')}</button></div>${body}`;$('#modal').showModal()}
 function formField(label,name,value='',type='text',attrs=''){return `<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" ${attrs}></div>`}
 function selectField(label,name,options,value){return `<div class="field"><label for="f-${name}">${label}</label><select id="f-${name}" name="${name}">${options.map(o=>{let [v,n]=Array.isArray(o)?o:[o,o];return `<option value="${esc(v)}" ${v===value?'selected':''}>${esc(n)}</option>`}).join('')}</select></div>`}
@@ -547,7 +571,7 @@ function history(){let items=[...state.history,...state.sessions.map(s=>({...s,t
 
 
 
-function profile(){return head('SEUS GOSTOS, SEU ESTILO','Meu perfil')+`<div class="profile-banner"><img class="profile-portrait" src="banner-profile.png" alt="Seu gatinho"><div class="profile-label"><strong>Meu Perfil</strong><small>Personalize seu espaço e o NekoQuest do seu jeito.</small><small>Companheiro: ${cats[state.cat][0]}</small></div></div><div class="profile-quick"><button data-page="cats"><img src="assets/companheiros/${state.cat}.svg" alt=""><span class="quick-text"><strong>Meu gatinho</strong><small>Escolha e personalize seu companheiro</small></span>${icon('arrow')}</button><button data-page="areas"><img src="assets/areas/tasks.svg" alt=""><span class="quick-text"><strong>Minhas áreas</strong><small>Organize sua rotina do seu jeito</small></span>${icon('arrow')}</button></div><h2 class="profile-mini-head">Aparência e preferências</h2><form data-form="profile">${formField('Como quer ser chamado?','name',state.name,'text','required maxlength="40"')}${selectField('Tema','theme',[['dark','Noite · escuro'],['light','Dia · claro']],state.theme)}<label>Cor principal</label><div class="palette">${['#91c4a8','#9485d6','#e99f82','#8fbde8','#efc579'].map(c=>`<button type="button" data-action="color" data-value="${c}" class="${state.color===c?'selected':''}" style="background:${c}" aria-label="Cor ${c}"></button>`).join('')}</div>${formField('Ou escolha sua cor','color',state.color,'color')}<label class="checklabel"><input type="checkbox" name="motion" ${state.preferences.motion?'checked':''}> Animações suaves</label><button class="primary wide">Salvar perfil</button></form><div class="section"><h2>Seus dados</h2></div>${btn('backup',icon('download')+' Exportar backup completo','wide')}<label for="import">Restaurar backup JSON</label><input id="import" type="file" accept="application/json,.json">${btn('install','Instalar NekoQuest','wide')}<p class="footnote">Seus dados ficam neste navegador. O backup inclui todas as áreas, treinos e sessões em andamento. Não há conexão com banco ou sincronização automática.</p><p class="footnote">NekoQuest 5.9.1</p>`+modernSettings()}
+function profile(){return head('SEUS GOSTOS, SEU ESTILO','Meu perfil')+`<div class="profile-banner"><img class="profile-portrait" src="banner-profile.png" alt="Seu gatinho"><div class="profile-label"><strong>Meu Perfil</strong><small>Personalize seu espaço e o NekoQuest do seu jeito.</small><small>Companheiro: ${cats[state.cat][0]}</small></div></div><div class="profile-quick"><button data-page="cats"><img src="${chosenCatArtwork()}" alt=""><span class="quick-text"><strong>Meu gatinho</strong><small>Escolha e personalize seu companheiro</small></span>${icon('arrow')}</button><button data-page="areas"><img src="assets/areas/tasks.svg" alt=""><span class="quick-text"><strong>Minhas áreas</strong><small>Organize sua rotina do seu jeito</small></span>${icon('arrow')}</button></div><h2 class="profile-mini-head">Aparência e preferências</h2><form data-form="profile">${formField('Como quer ser chamado?','name',state.name,'text','required maxlength="40"')}${selectField('Tema','theme',[['dark','Noite · escuro'],['light','Dia · claro']],state.theme)}<label>Cor principal</label><div class="palette">${['#91c4a8','#9485d6','#e99f82','#8fbde8','#efc579'].map(c=>`<button type="button" data-action="color" data-value="${c}" class="${state.color===c?'selected':''}" style="background:${c}" aria-label="Cor ${c}"></button>`).join('')}</div>${formField('Ou escolha sua cor','color',state.color,'color')}<label class="checklabel"><input type="checkbox" name="motion" ${state.preferences.motion?'checked':''}> Animações suaves</label><button class="primary wide">Salvar perfil</button></form><div class="section"><h2>Seus dados</h2></div>${btn('backup',icon('download')+' Exportar backup completo','wide')}<label for="import">Restaurar backup JSON</label><input id="import" type="file" accept="application/json,.json">${btn('install','Instalar NekoQuest','wide')}<p class="footnote">Seus dados ficam neste navegador. O backup inclui todas as áreas, treinos e sessões em andamento. Não há conexão com banco ou sincronização automática.</p><p class="footnote">NekoQuest 5.9.2</p>`+modernSettings()}
 function taskForm(id,preset={}){let t=state.tasks.find(t=>t.id===id)||{title:'',date:page==='tasks'&&missionView==='calendar'?day:Core.today(),category:'Estudos',priority:'normal',minutes:25,xp:10,repeat:page==='tasks'&&missionView==='routines'?'daily':'none',notes:'',subtasks:[],...preset};modal(id?'Editar tarefa':'Nova tarefa',`<form data-form="task" data-id="${esc(id||'')}">${selectField('Lista','listId',[['','Sem lista'],...org().lists.map(l=>[l.id,l.title])],t.listId||'')}${formField('O que você quer fazer?','title',t.title,'text','required maxlength="100"')}${selectField('Categoria','category',['Estudos','Trabalho','Saúde','Pessoal'],t.category)}<div class="grid form-grid">${formField('Data','date',t.date,'date','required')}${selectField('Prioridade','priority',[['normal','Normal'],['high','Alta'],['low','Baixa']],t.priority)}</div><div class="grid">${formField('Duração (min)','minutes',t.minutes,'number','min="1" max="600" required')}${formField('XP / moedas','xp',t.xp,'number',`min="1" max="10000" required ${t.done?'readonly':''}`)}</div>${formField('Horário (opcional)','time',t.time||'','time')}${selectField('Recorrência','repeat',[['none','Uma vez — tarefa pontual'],['daily','Todo dia — rotina / hábito'],['weekly','Semanalmente'],['monthly','Mensalmente'],['yearly','Anualmente']],t.repeat)}<p class="footnote">Concluir uma recorrente cria a próxima ocorrência. Todas as tarefas dão XP e moedas.</p><label for="f-notes">Notas</label><textarea id="f-notes" name="notes" maxlength="2000">${esc(t.notes)}</textarea><label for="f-subtasks">Subtarefas · uma por linha</label><textarea id="f-subtasks" name="subtasks" maxlength="3000" placeholder="Separar material&#10;Revisar o conteúdo">${esc(t.subtasks.map(s=>s.title).join('\n'))}</textarea>${t.subtasks.length?'<div class="checklist">'+t.subtasks.map((s,i)=>`<div class="subtask"><button type="button" data-action="subtask" data-id="${esc(id)}" data-index="${i}" aria-label="Alternar subtarefa">${icon(s.done?'check':'box')}</button><span>${esc(s.title)}</span></div>`).join('')+'</div>':''}<button class="primary wide">Salvar tarefa</button>${id?`<button type="button" class="wide danger" data-action="delete-task" data-id="${esc(id)}">Excluir tarefa</button>`:''}</form>`)}
 function rewardForm(id){let r=state.rewards.find(r=>r.id===id)||{title:'',cost:25,cat:'mochi'};modal(id?'Editar recompensa':'Nova recompensa',`<form data-form="reward" data-id="${esc(id||'')}">${formField('Sua pausa merecida','title',r.title,'text','required maxlength="100"')}${formField('Custo em moedas de tarefa','cost',r.cost,'number','required min="1" max="10000"')}${selectField('Gatinho','cat',Object.entries(cats).map(([k,v])=>[k,v[0]]),r.cat)}<button class="primary wide">Salvar recompensa</button>${id?`<button type="button" class="wide danger" data-action="delete-reward" data-id="${esc(id)}">Excluir recompensa</button>`:''}</form>`)}
 
@@ -801,32 +825,31 @@ document.addEventListener('change',e=>{const form=e.target.closest('form[data-fo
 
 /** All primary navigation and rendering have one final implementation. */
 const PRIMARY_NAV=[['home','home','Início'],['areas','box','Áreas'],['profile','user','Perfil']];
-const SECONDARY_NAV=[['finance','wallet','Finanças'],['hydration','water','Hidratação'],['food','leaf','Alimentação'],['journal','edit','Diário'],['breathe','leaf','Respirar'],['insights','star','Meu progresso'],['cats','star','Gatinhos'],['history','history','Histórico']];
+const SECONDARY_NAV=[['finance','wallet','Finanças'],['hydration','water','Hidratação'],['food','leaf','Alimentação'],['journal','edit','Diário'],['insights','star','Meu progresso'],['cats','star','Gatinhos'],['history','history','Histórico']];
 shapes.workout='M3 6v8m3-10v12M6 10h8m0-6v12m3-10v8';
 shapes.water='M10 2C8 6 4 9 4 12a6 6 0 0 0 12 0c0-3-4-6-6-10z';
-const CATEGORY_ART=Object.freeze({tasks:'art-tasks.png',workouts:'art-workouts.png',food:'art-food.png',finance:'art-finance.png',breathe:'art-breathe.png',hydration:'art-hydration.png',focus:'art-focus.png',journal:'art-journal.png',insights:'assets/progresso.svg'});
-const AREA_DATA=[['tasks','Tarefas','tasks'],['workouts','Treinos','workouts'],['food','Refeições','food'],['finance','Finanças','finance'],['breathe','Parar de Fumar','breathe'],['hydration','Hidratação','hydration'],['focus','Foco e Pomodoro','focus'],['journal','Diário','journal'],['insights','Progresso','insights'],['history','Histórico','history'],['cats','Meus companheiros','cats']];
+const CATEGORY_ART=Object.freeze({tasks:'art-tasks.png',workouts:'art-workouts.png',food:'art-food.png',finance:'art-finance.png',hydration:'art-hydration.png',focus:'art-focus.png',journal:'art-journal.png',insights:'assets/progresso.svg'});
+const AREA_DATA=[['tasks','Tarefas','tasks'],['workouts','Treinos','workouts'],['food','Refeições','food'],['finance','Finanças','finance'],['hydration','Hidratação','hydration'],['focus','Foco e Pomodoro','focus'],['journal','Diário','journal'],['insights','Progresso','insights'],['history','Histórico','history'],['cats','Meus companheiros','cats']];
 const AREA_PAGES=new Set(AREA_DATA.map(a=>a[0]));
 function areaSummary(p){const t=Core.today();switch(p){
  case 'tasks':{let pending=state.tasks.filter(x=>!x.done&&!x.archived&&x.date<=t).length;return pending?pending+' pendente'+(pending!==1?'s':''):'Tudo em dia';}
  case 'workouts':return Workouts.active(state.workouts)?'Treino em andamento':Workouts.completed(state.workouts).filter(x=>Core.date(new Date(x.finishedAt))===t).length+' treino(s) hoje';
  case 'food':return (state.food?.plans||[]).filter(x=>x.date===t&&x.done).length+' refeições registradas';
  case 'finance':return money(Core.finance(state,t.slice(0,7)).balance);
- case 'breathe':{let b=Breathe.stats(Breathe.init(state).breathe);return b?Math.floor(b.streak/86400000)+' dias sem cigarro':'Comece sua jornada';}
  case 'hydration':{let d=Hydration.day(waterData(),t);return d.water+' mL'+(d.goal?' / '+d.goal+' mL':'');}
  default:return ''}}
-function areaTile(p,label,image,summary=false){const painted=Object.hasOwn(CATEGORY_ART,p)&&CATEGORY_ART[p].endsWith('.png');const custom={cats:`assets/companheiros/${Object.hasOwn(cats,state.cat)?state.cat:'luna'}.svg`};return `<button class="area-tile area-${p} ${painted?'painted-art':''}" data-page="${p}" aria-label="Abrir ${label}"><img src="${custom[p]||CATEGORY_ART[p]||'assets/areas/'+p+'.svg'}" alt="" loading="lazy"><span class="area-title">${esc(label)}</span>${summary?`<span class="area-caption"><small>${esc(areaSummary(p))}</small></span>`:''}</button>`}
+function areaTile(p,label,image,summary=false){const painted=Object.hasOwn(CATEGORY_ART,p)&&CATEGORY_ART[p].endsWith('.png');const custom={cats:chosenCatArtwork()};return `<button class="area-tile area-${p} ${painted?'painted-art':''}" data-page="${p}" aria-label="Abrir ${label}"><img src="${custom[p]||CATEGORY_ART[p]||'assets/areas/'+p+'.svg'}" alt="" loading="lazy"><span class="area-title">${esc(label)}</span>${summary?`<span class="area-caption"><small>${esc(areaSummary(p))}</small></span>`:''}</button>`}
 function areas(){return `<section class="area-heading"><h1>Áreas</h1><p class="muted">Todas as funcionalidades do seu NekoQuest em um só lugar.</p></section><div class="area-grid">${AREA_DATA.map(([p,label,image])=>areaTile(p,label,image)).join('')}</div>`}
 function home(){const today=Core.today(),done=Core.completions(state).filter(h=>Core.date(new Date(h.at))===today).length;
  const pending=state.tasks.filter(t=>!t.archived&&!t.done&&t.date<=today).length,total=done+pending;
- return `<section class="hero-neko"><img class="hero-scene" src="assets/banner-inicio.svg" alt="Cenário pixel art noturno sem texto"><img class="hero-companion" src="assets/companheiros/${Object.hasOwn(cats,state.cat)?state.cat:'luna'}.svg" alt="Seu companheiro ${esc(cats[state.cat]?.[0]||'Luna')}"><div class="hero-overlay"><span>Olá, ${esc(state.name)}! 👋</span><small>Sua rotina, no seu ritmo.</small></div></section>
+ return `<section class="hero-neko"><img class="hero-scene" src="assets/banner-inicio.svg" alt="Cenário pixel art noturno sem texto"><img class="hero-companion" src="${chosenCatArtwork()}" alt="Seu companheiro ${esc(cats[state.cat]?.[0]||'Luna')}"><div class="hero-overlay"><span>Olá, ${esc(state.name)}! 👋</span><small>Sua rotina, no seu ritmo.</small></div></section>
  <div class="section row"><h2>Resumo do dia</h2><small>${new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'short'})}</small></div>
  
  <div class="home-grid">${AREA_DATA.map(([p,label,image])=>areaTile(p,label,image,true)).join('')}</div>
  <button class="wide see-areas" data-page="areas">Explorar todas as áreas ${icon('arrow')}</button>`;
 }
 function more(){return areas()}
-const PAGE_VISUALS={tasks:['Tarefas','Organize suas tarefas e mantenha o foco.','tasks'],workouts:['Treinos','Acompanhe seus treinos e evolua sempre.','workouts'],food:['Refeições','Cuide das refeições e dos bons hábitos.','food'],finance:['Finanças','Acompanhe seus gastos e metas.','finance'],breathe:['Parar de Fumar','Pequenas escolhas, grandes conquistas.','breathe'],hydration:['Hidratação','Beba água e cuide da sua saúde.','hydration'],focus:['Foco e Pomodoro','Uma coisa de cada vez.','focus'],journal:['Diário','Registre seus pensamentos e conquistas.','journal'],insights:['Progresso','Veja o que você conquistou.','insights'],history:['Histórico','Sua jornada contada em pequenos passos.','tasks']};
+const PAGE_VISUALS={tasks:['Tarefas','Organize suas tarefas e mantenha o foco.','tasks'],workouts:['Treinos','Acompanhe seus treinos e evolua sempre.','workouts'],food:['Refeições','Cuide das refeições e dos bons hábitos.','food'],finance:['Finanças','Acompanhe seus gastos e metas.','finance'],hydration:['Hidratação','Beba água e cuide da sua saúde.','hydration'],focus:['Foco e Pomodoro','Uma coisa de cada vez.','focus'],journal:['Diário','Registre seus pensamentos e conquistas.','journal'],insights:['Progresso','Veja o que você conquistou.','insights'],history:['Histórico','Sua jornada contada em pequenos passos.','tasks']};
 function pageVisual(p){const info=PAGE_VISUALS[p];return info?'<section class="page-visual'+(CATEGORY_ART[p]?.endsWith('.png')?' page-visual--illustrated':'')+'"><div><h1>'+info[0]+'</h1><p>'+info[1]+'</p></div><img class="page-art" src="'+(CATEGORY_ART[p]||'assets/areas/'+p+'.svg')+'" alt="" loading="lazy"></section>':''}
 function render(){
  document.body.classList.toggle('light',state.theme==='light');document.body.classList.toggle('still',!state.preferences.motion);
@@ -836,8 +859,8 @@ function render(){
  $('#header').innerHTML=`<div class="brand"><img src="assets/neko-marca.svg" alt="Ícone pixel art do NekoQuest" style="height:38px;width:38px"><span>NekoQuest</span></div><button class="icon-btn quiet" data-page="profile" aria-label="Abrir perfil">${icon('user')}</button>`;
  $('#nav').innerHTML=PRIMARY_NAV.map(([p,i,n])=>`<button data-page="${p}" class="${page===p?'active':''}" ${page===p?'aria-current="page"':''}>${icon(i)}<span>${n}</span></button>`).join('');
  $('#app').dataset.page=page;
- const view={home,areas,tasks,focus,workouts:workoutPage,finance:finances,history,cats:collection,more,profile,insights,journal,breathe,hydration,food}[page]||home;
- $('#app').innerHTML=(page!=='home'&&page!=='areas'&&page!=='profile'?`<button class="section-back" data-page="areas">${icon('back')} Áreas</button>`:'')+(appUpdate?'<div class="update-banner"><span>NekoQuest 5.9.1 disponível.</span><button data-action="update-app">Atualizar</button></div>':'')+pageVisual(page)+view()+focusDock()+(['tasks'].includes(page)?`<button class="fab primary" data-action="task" aria-label="Nova tarefa">${icon('plus')}</button>`:'');
+ const view={home,areas,tasks,focus,workouts:workoutPage,finance:finances,history,cats:collection,more,profile,insights,journal,hydration,food}[page]||home;
+ $('#app').innerHTML=(page!=='home'&&page!=='areas'&&page!=='profile'?`<button class="section-back" data-page="areas">${icon('back')} Áreas</button>`:'')+(appUpdate?'<div class="update-banner"><span>NekoQuest 5.9.2 disponível.</span><button data-action="update-app">Atualizar</button></div>':'')+pageVisual(page)+view()+focusDock()+(['tasks'].includes(page)?`<button class="fab primary" data-action="task" aria-label="Nova tarefa">${icon('plus')}</button>`:'');
  tick();paintWorkoutClock();
 }
 /** Use a single accent against all surfaces, with AA text and control contrast. */
@@ -856,7 +879,16 @@ function contrastAccent(hex,theme){
 }
 
 /** Existing ambience preference stays available; no pixel landscape is shipped. */
-const catArtwork=Object.fromEntries(Object.keys(cats).map(id=>[id,'assets/companheiros/'+id+'.svg']));
+/* Os seis companheiros usam poses PNG individuais do kit pixel art original. */
+const catArtwork=Object.freeze({
+ luna:'gato-dormindo.png',
+ mochi:'gato-feliz.png',
+ mikan:'gato-animado.png',
+ nori:'gato-determinado.png',
+ yuki:'gato-normal.png',
+ sora:'gato-estudando.png'
+});
+const chosenCatArtwork=()=>catArtwork[Object.hasOwn(cats,state.cat)?state.cat:'luna'];
 function collection(){return head('SEUS COMPANHEIROS','Meus companheiros','Escolha o gatinho que aparece na tela inicial.')+`<div class="cats-grid">${Object.entries(cats).map(([id,[name,desc]])=>`<button class="cat-choice ${state.cat===id?'selected':''}" data-action="cat" data-value="${id}" aria-pressed="${state.cat===id}"><span class="cat-portrait"><img src="${catArtwork[id]}" alt="Gatinho ${name} em pixel art" loading="lazy"></span><b>${name}</b><small>${desc}</small><span class="cat-selected">${state.cat===id?'✓ Seu companheiro':'Escolher'}</span></button>`).join('')}</div>`;}
 
 
