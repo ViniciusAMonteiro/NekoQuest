@@ -881,12 +881,12 @@ function contrastAccent(hex,theme){
 /** Existing ambience preference stays available; no pixel landscape is shipped. */
 /* Os seis companheiros usam poses PNG individuais do kit pixel art original. */
 const catArtwork=Object.freeze({
- luna:'gato-dormindo.png',
- mochi:'gato-feliz.png',
- mikan:'gato-animado.png',
- nori:'gato-determinado.png',
- yuki:'gato-normal.png',
- sora:'gato-estudando.png'
+ luna:'assets/companheiros/luna.png',
+ mochi:'assets/companheiros/mochi.png',
+ mikan:'assets/companheiros/mikan.png',
+ nori:'assets/companheiros/nori.png',
+ yuki:'assets/companheiros/yuki.png',
+ sora:'assets/companheiros/sora.png'
 });
 const chosenCatArtwork=()=>catArtwork[Object.hasOwn(cats,state.cat)?state.cat:'luna'];
 function collection(){return head('SEUS COMPANHEIROS','Meus companheiros','Escolha o gatinho que aparece na tela inicial.')+`<div class="cats-grid">${Object.entries(cats).map(([id,[name,desc]])=>`<button class="cat-choice ${state.cat===id?'selected':''}" data-action="cat" data-value="${id}" aria-pressed="${state.cat===id}"><span class="cat-portrait"><img src="${catArtwork[id]}" alt="Gatinho ${name} em pixel art" loading="lazy"></span><b>${name}</b><small>${desc}</small><span class="cat-selected">${state.cat===id?'✓ Seu companheiro':'Escolher'}</span></button>`).join('')}</div>`;}
